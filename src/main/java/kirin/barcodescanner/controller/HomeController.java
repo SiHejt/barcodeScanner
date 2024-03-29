@@ -7,43 +7,42 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
     @GetMapping("/")
     public String redirectFromIndex() {
-        return "redirect:/mainDir/home";
+        return "redirect:/home/viewAll";
     }
 
-    @GetMapping("/mainDir/home")
-    public String home() {
-        return "/mainDir/home";
+    @GetMapping("/home/viewAll")
+    public String viewAllPage() {
+        return "/home/viewAll";
     }
 
-    @GetMapping("/mainDir/CU")
+    @GetMapping("/home/cu")
     public String cuPage() {
 
-        return "/mainDir/CU";
+        return "/home/cu";
     }
 
-    @GetMapping("/mainDir/SevenEleven")
-    public String SevenElevenPage() {
+    @GetMapping("/home/sevenEleven")
+    public String sevenElevenPage() {
 
-        return "/mainDir/SevenEleven";
+        return "/home/sevenEleven";
     }
 
-    @GetMapping("/mainDir/GS25")
-    public String GS25Page() {
+    @GetMapping("/home/gs25")
+    public String gs25Page() {
 
-        return "/mainDir/GS25";
+        return "/home/gs25";
     }
 
-    @GetMapping("/mainDir/event")
+    @GetMapping("/home/event")
     public String eventPage() {
 
-        return "/mainDir/event";
+        return "/home/event";
     }
 
-    @GetMapping("/myPageDir/myPage")
+    @GetMapping("/home/myPage")
     public String myPage() {
 
-        return "/myPageDir/myPage";
+        return "/home/myPage";
     }
-
 
 }

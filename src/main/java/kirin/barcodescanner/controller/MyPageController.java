@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MyPageController {
 
-    @GetMapping("/myPageDir/likesList")
-    public String likesList() {
-        return "/myPageDir/likesList";
+    @GetMapping("/myPageMenu/likeList")
+    public String likeListPage() {
+        return "/myPageMenu/likeList";
     }
 
-    @GetMapping("/myPageDir/viewMyReview")
-    public String viewMyReview() {
-        return "/myPageDir/viewMyReview";
+    @GetMapping("/myPageMenu/viewMyReview")
+    public String viewMyReviewPage() {
+        return "/myPageMenu/viewMyReview";
     }
 }
