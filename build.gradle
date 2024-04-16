@@ -20,9 +20,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.seleniumhq.selenium:selenium-java:4.1.2'
-
+	runtimeOnly 'mysql:mysql-connector-java:8.0.28' 
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+    	implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    	implementation 'javax.inject:javax.inject:1'
+   	implementation 'org.mybatis:mybatis:3.5.6'
+   	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+   	compileOnly 'org.projectlombok:lombok'
+  	annotationProcessor 'org.projectlombok:lombok'
+  	implementation 'org.springframework.boot:spring-boot-starter-security'
+   	implementation 'org.springframework.session:spring-session-jdbc'
 }
 
 tasks.named('test') {
