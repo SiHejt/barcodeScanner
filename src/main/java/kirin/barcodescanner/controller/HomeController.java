@@ -15,11 +15,6 @@ public class HomeController {
         return "/home/viewAll";
     }
 
-    @GetMapping("/home/cu")
-    public String cuPage() {
-
-        return "/home/cu";
-    }
 
     @GetMapping("/home/sevenEleven")
     public String sevenElevenPage() {

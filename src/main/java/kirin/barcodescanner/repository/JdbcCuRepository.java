@@ -1,23 +1,37 @@
 package kirin.barcodescanner.repository;
 
+import kirin.barcodescanner.domain.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
-public class JdbcCuRepository {
-
+public class jdbcCuRepository implements CuRepository {
+    private final JdbcTemplate jdbcTemplate;
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    public jdbcCuRepository(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource);
+    }
 
-    public void saveProduct(List<String> barcodeNumbers, List<String> productNames, List<String> productPrices, String category, List<String> discounts) {
-        String insertQuery = "INSERT INTO cu_table (barcode_num, prod_name, price, category, discount) VALUES (?, ?, ?, ?, ?) " +
-                "ON DUPLICATE KEY UPDATE prod_name = VALUES(prod_name), price = VALUES(price), category = VALUES(category), discount = VALUES(discount)";
+    @Override
+    public List<Product> findByCategory(String category) {
+        String sql = "SELECT * FROM cu_table WHERE category = ?";
+        return jdbcTemplate.query(sql, productRowMapper(), category);
+    }
 
-        for (int i = 0; i < productNames.size(); i++) {
-            jdbcTemplate.update(insertQuery, barcodeNumbers.get(i), productNames.get(i), productPrices.get(i), category, discounts.get(i));
-        }
+    private RowMapper<Product> productRowMapper() {
+        return (rs, rowNum) -> {
+            Product product = new Product();
+            product.setBarcodeNumber(rs.getString("barcode_num"));
+            product.setProductName(rs.getString("prod_name"));
+            product.setProductPrice(rs.getString("price"));
+            product.setProductCategory(rs.getString("category"));
+            product.setProductDiscount(rs.getString("discount"));
+            return product;
+        };
     }
 }
