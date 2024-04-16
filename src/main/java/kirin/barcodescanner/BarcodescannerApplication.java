@@ -1,6 +1,6 @@
 package kirin.barcodescanner;
 
-import kirin.barcodescanner.repository.JdbcCuRepository;
+import kirin.barcodescanner.repository.JdbcSaveRepository;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -27,7 +27,6 @@ public class BarcodescannerApplication implements CommandLineRunner {
 	}
 
 
-
 	@Override
 	public void run(String... args) throws InterruptedException {
 		ChromeOptions options = new ChromeOptions();
@@ -45,31 +44,31 @@ public class BarcodescannerApplication implements CommandLineRunner {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.urlToBe(url));
 
-		cuCrawler(6, "간편식사", driver);
-
-		((JavascriptExecutor) driver).executeScript("gomaincategory('20',2)");
-		Thread.sleep(1000);
-		cuCrawler(2, "즉석조리", driver);
-
-		((JavascriptExecutor) driver).executeScript("gomaincategory('30',3)");
-		Thread.sleep(1000);
-		cuCrawler(39, "과자류", driver);
-
-		((JavascriptExecutor) driver).executeScript("gomaincategory('40',4)");
-		Thread.sleep(1000);
-		cuCrawler(8, "아이스크림", driver);
-
-		((JavascriptExecutor) driver).executeScript("gomaincategory('50',5)");
-		Thread.sleep(1000);
-		cuCrawler(68, "식품", driver);
-
-		((JavascriptExecutor) driver).executeScript("gomaincategory('60',6)");
-		Thread.sleep(1000);
-		cuCrawler(27, "음료", driver);
-
-		((JavascriptExecutor) driver).executeScript("gomaincategory('70',7)");
-		Thread.sleep(1000);
-		cuCrawler(34, "생활용품", driver);
+//		cuCrawler(6, "간편식사", driver);
+//
+//		((JavascriptExecutor) driver).executeScript("gomaincategory('20',2)");
+//		Thread.sleep(1000);
+//		cuCrawler(2, "즉석조리", driver);
+//
+//		((JavascriptExecutor) driver).executeScript("gomaincategory('30',3)");
+//		Thread.sleep(1000);
+//		cuCrawler(39, "과자류", driver);
+//
+//		((JavascriptExecutor) driver).executeScript("gomaincategory('40',4)");
+//		Thread.sleep(1000);
+//		cuCrawler(8, "아이스크림", driver);
+//
+//		((JavascriptExecutor) driver).executeScript("gomaincategory('50',5)");
+//		Thread.sleep(1000);
+//		cuCrawler(68, "식품", driver);
+//
+//		((JavascriptExecutor) driver).executeScript("gomaincategory('60',6)");
+//		Thread.sleep(1000);
+//		cuCrawler(27, "음료", driver);
+//
+//		((JavascriptExecutor) driver).executeScript("gomaincategory('70',7)");
+//		Thread.sleep(1000);
+//		cuCrawler(34, "생활용품", driver);
 
 
 		driver.quit();
@@ -130,8 +129,8 @@ public class BarcodescannerApplication implements CommandLineRunner {
 	}
 
 	@Autowired
-	private JdbcCuRepository jdbcCuRepository;
+	private JdbcSaveRepository jdbcsaveRepository;
 	public void saveData(List<String> barcodeNumbers, List<String> productNames, List<String> productPrices, String category,List<String> discounts) {
-		jdbcCuRepository.saveProduct(barcodeNumbers, productNames, productPrices, category, discounts);
+		jdbcsaveRepository.saveProduct(barcodeNumbers, productNames, productPrices, category, discounts);
 	}
 }

@@ -10,10 +10,10 @@ import javax.sql.DataSource;
 import java.util.List;
 
 @Repository
-public class jdbcCuRepository implements CuRepository {
+public class JdbcCuRepository implements CuRepository {
     private final JdbcTemplate jdbcTemplate;
     @Autowired
-    public jdbcCuRepository(DataSource dataSource) {
+    public JdbcCuRepository(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 

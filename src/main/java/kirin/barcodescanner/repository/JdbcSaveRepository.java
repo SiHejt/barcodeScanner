@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class jdbcSaveRepository {
+public class JdbcSaveRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
