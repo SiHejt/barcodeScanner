@@ -1,10 +1,21 @@
 package kirin.barcodescanner.controller;
 
+import kirin.barcodescanner.domain.Product;
+import kirin.barcodescanner.service.CuService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
+    private final CuService cuService;
+
+    @Autowired
+    public HomeController(CuService cuService) {
+        this.cuService = cuService;
+    }
+
     @GetMapping("/")
     public String redirectFromIndex() {
         return "redirect:/home/viewAll";
@@ -15,6 +26,13 @@ public class HomeController {
         return "/home/viewAll";
     }
 
+    @GetMapping("/home/viewProduct")
+    public String viewProductPage(String barcodeNumber, Model model) {
+        Product product = cuService.findProductByBarcodeNum(barcodeNumber);
+        model.addAttribute("product", product);
+
+        return "/home/viewProduct";
+    }
 
     @GetMapping("/home/sevenEleven")
     public String sevenElevenPage() {

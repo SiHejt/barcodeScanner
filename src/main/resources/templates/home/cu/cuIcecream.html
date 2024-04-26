@@ -22,13 +22,17 @@
 <br>
 아이스크림 카테고리
 <br><br>
-<tr th:each="product : ${products}">
-    상품이미지공간입니다!
-    <td th:text="${product.productName}"></td>
-    <td th:text="${product.productPrice}"></td>원
-    할인태그:<td th:text="${product.productDiscount}"></td>
-    <br>
-</tr>
+
+<ul>
+    <li th:each="product : ${products}">
+        <a th:href="@{/home/viewProduct(barcodeNumber=${product.barcodeNumber})}">
+            상품이미지공간입니다!
+            <td th:text="${product.productName}"></td>
+            <td th:text="${product.productPrice}"></td>원
+            할인태그:<td th:text="${product.productDiscount}"></td>
+        </a>
+    </li>
+</ul>
 
 </body>
 </html>

@@ -23,6 +23,11 @@ public class JdbcCuRepository implements CuRepository {
         return jdbcTemplate.query(sql, productRowMapper(), category);
     }
 
+    @Override
+    public List<Product> findProductByBarcodeNum(String barcodeNum) {
+        return jdbcTemplate.query("SELECT * FROM cu_table WHERE barcode_num = ?", productRowMapper(), barcodeNum);
+    }
+
     private RowMapper<Product> productRowMapper() {
         return (rs, rowNum) -> {
             Product product = new Product();

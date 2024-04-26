@@ -10,8 +10,14 @@ import java.util.List;
 public class CuService {
     private final CuRepository cuRepository;
 
+
+
     public CuService(CuRepository cuRepository) {
         this.cuRepository = cuRepository;
+    }
+
+    public Product findProductByBarcodeNum(String barcodeNumber) {
+        return cuRepository.findProductByBarcodeNum(barcodeNumber).get(0);
     }
 
     public List<Product> viewCu(String category) {

@@ -29,20 +29,20 @@ public class BarcodescannerApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws InterruptedException {
-		ChromeOptions options = new ChromeOptions();
-	
-		//options.addArguments("--headless");
-		options.addArguments("--remote-allow-origins=*");
-		options.addArguments("--lang=ko");
-		options.addArguments("--start-maximized");
-		
-		
-		System.setProperty("webdriver.chrome.driver", "src/main/resources/static/chromedriver_win32/chromedriver.exe");
-		WebDriver driver = new ChromeDriver(options);
-		String url = "https://cu.bgfretail.com/product/product.do?category=product&depth2=4&depth3=1";
-		driver.get(url);
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.urlToBe(url));
+//		ChromeOptions options = new ChromeOptions();
+//
+//		//options.addArguments("--headless");
+//		options.addArguments("--remote-allow-origins=*");
+//		options.addArguments("--lang=ko");
+//		options.addArguments("--start-maximized");
+//
+//
+//		System.setProperty("webdriver.chrome.driver", "src/main/resources/static/chromedriver_win32/chromedriver.exe");
+//		WebDriver driver = new ChromeDriver(options);
+//		String url = "https://cu.bgfretail.com/product/product.do?category=product&depth2=4&depth3=1";
+//		driver.get(url);
+//		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//		wait.until(ExpectedConditions.urlToBe(url));
 
 //		cuCrawler(6, "간편식사", driver);
 //
@@ -71,7 +71,7 @@ public class BarcodescannerApplication implements CommandLineRunner {
 //		cuCrawler(34, "생활용품", driver);
 
 
-		driver.quit();
+//		driver.quit();
 
 	}
 
