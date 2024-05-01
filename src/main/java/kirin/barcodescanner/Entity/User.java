@@ -1,6 +1,10 @@
 package kirin.barcodescanner.Entity;
 
-import javax.persistence.Id; 
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -19,7 +23,7 @@ public class User extends BaseTimeEntity {
  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long Id;
+    private Long id;
  
     @Column(nullable = false)
     private String name;
@@ -30,9 +34,12 @@ public class User extends BaseTimeEntity {
     @Column
     private String picture;
  
-    @Enumerated(EnumType.STRING) // Enum값을 어떤 형태로 저장할지 결정합니다. (기본적은 int)
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private MyRole role; // 사용자의 권한을 관리할 Enum 클래스
+    private MyRole role;
+ 
+    @OneToMany(mappedBy = "user") // User 엔티티와 매핑된 Review 엔티티의 user 필드에 의해 매핑됩니다.
+    private List<Review> reviews;
  
     @Builder
     public User(String name, String email, String picture, MyRole role) {
