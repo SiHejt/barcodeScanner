@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>viewMyReview</title>
+    <title>My Reviews</title>
 </head>
 <body>
-리뷰1
-<br>
-리뷰2
-<br>
-<a href="/home/myPage">뒤로가기</a></li>
+<h1>My Reviews</h1>
+<div th:if="${reviews.empty}">
+    <p>No reviews found!</p>
+</div>
+<div th:each="review : ${reviews}">
+    <div>
+        <h2 th:text="${review.reviewText}"></h2>
+        <p>Rating: <span th:text="${review.rating}"></span></p>
+        <p>Date: <span th:text="${review.reviewDate}"></span></p>
+    </div>
+</div>
 </body>
 </html>
