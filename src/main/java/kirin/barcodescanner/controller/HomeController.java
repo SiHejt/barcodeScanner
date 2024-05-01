@@ -2,10 +2,14 @@ package kirin.barcodescanner.controller;
 
 import kirin.barcodescanner.domain.Product;
 import kirin.barcodescanner.service.CuService;
+
+import java.util.NoSuchElementException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class HomeController {
@@ -27,12 +31,19 @@ public class HomeController {
     }
 
     @GetMapping("/home/viewProduct")
-    public String viewProductPage(String barcodeNumber, Model model) {
+    public String viewProductPage(@RequestParam(required = false) String barcodeNumber, Model model) {
+        
+       
         Product product = cuService.findProductByBarcodeNum(barcodeNumber);
         model.addAttribute("product", product);
-
+      
+        
+        
         return "/home/viewProduct";
     }
+
+        
+  
 
     @GetMapping("/home/sevenEleven")
     public String sevenElevenPage() {
