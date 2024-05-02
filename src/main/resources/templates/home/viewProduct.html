@@ -20,12 +20,17 @@
         }
     </script>
 
-    <div class="form-group">
-        <input type="text" maxlength="10" id="ratingDown" name="ratingDown" placeholder="별점" required><br>
-        <input type="text" id="reviewText" name="reviewText" placeholder="리뷰작성" required><br>
-    </div>
+    <!-- 리뷰 폼 시작 -->
+    <form action="/submitReview" method="POST">
+       
+            <input type="text" maxlength="10" id="rating" name="rating" placeholder="별점" required><br>
+            <input type="text" id="reviewText" name="reviewText" placeholder="리뷰작성" required><br>
+            <input type="hidden" id="barcodeNumber" name="barcodeNumber" th:value="${product.barcodeNumber}">
+        
 
-    <button type="submit">리뷰 등록</button>
+        <button type="submit">리뷰 등록</button>
+    </form>
+    <!-- 리뷰 폼 종료 -->
 
 </div>
 </body>
