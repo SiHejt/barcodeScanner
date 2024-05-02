@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>viewPost</title>
+</head>
+<body>
+<div class="container">
+    <div>
+        <h3 th:text="${product.productName}"></h3>
+        <p th:text="${product.productPrice}"> 원</p>
+        할인태그: <p th:text="${product.productDiscount}"></p>
+    </div>
+
+    <button onclick="goBack()">돌아가기</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+    <!-- 리뷰 폼 시작 -->
+    <form action="/submitReview" method="POST">
+       
+            <input type="text" maxlength="10" id="rating" name="rating" placeholder="별점" required><br>
+            <input type="text" id="reviewText" name="reviewText" placeholder="리뷰작성" required><br>
+            <input type="hidden" id="barcodeNumber" name="barcodeNumber" th:value="${product.barcodeNumber}">
+        
+
+        <button type="submit">리뷰 등록</button>
+    </form>
+    <!-- 리뷰 폼 종료 -->
+
+</div>
+</body>
+</html>
