@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CU</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<div th:replace="navbar.html"></div>
+<li><a href="/home/cu/cuQuickMeal">간편식사</a></li>
+<li><a href="/home/cu/cuInstant">즉석조리</a></li>
+<li><a href="/home/cu/cuSnack">과자류</a></li>
+<li><a href="/home/cu/cuIcecream">아이스크림</a></li>
+<li><a href="/home/cu/cuFood">식품</a></li>
+<li><a href="/home/cu/cuDrink">음료</a></li>
+<li><a href="/home/cu/cuSupplies">생활용품</a></li>
+<br>
+과자 카테고리
+<br><br>
+
+<ul>
+    <li th:each="product : ${products}">
+        <a th:href="@{/home/viewProduct(barcodeNumber=${product.barcodeNumber})}">
+            상품이미지공간입니다!
+            <td th:text="${product.productName}"></td>
+            <td th:text="${product.productPrice}"></td>원
+            할인태그:<td th:text="${product.productDiscount}"></td>
+        </a>
+    </li>
+</ul>
+
+</body>
+</html>
