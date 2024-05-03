@@ -1,5 +1,6 @@
 package kirin.barcodescanner.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,25 +11,63 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import kirin.barcodescanner.Entity.LikedItem;
 import kirin.barcodescanner.Entity.Review;
 import kirin.barcodescanner.Entity.User;
+import kirin.barcodescanner.domain.Product;
+import kirin.barcodescanner.service.CuService;
+import kirin.barcodescanner.service.LikedItemService;
 import kirin.barcodescanner.service.ReviewService;
 import kirin.barcodescanner.service.UserService;
 
 @Controller
 public class MyPageController {
 
-    @GetMapping("/myPageMenu/likeList")
-    public String likeListPage() {
-        return "/myPageMenu/likeList";
-    }
-    
     @Autowired
     private UserService userService;
     
+    @Autowired
+    private LikedItemService likeditemservice;
+    
+    @Autowired
+    private CuService cuService;
     
     @Autowired
     private ReviewService reviewService;
+    
+    
+    @GetMapping("/myPageMenu/likeList")
+    public String viewMyLikes(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            OAuth2User oauthUser = (OAuth2User) authentication.getPrincipal();
+            String email = oauthUser.getAttribute("email");
+
+            User user = userService.findOrCreateUserByEmail(email);
+            long id= user.getId();
+            List<LikedItem> likedItems = likeditemservice.findLikedItemsByUserId(id);
+            
+            // 각 찜 목록에 대한 상품 정보를 가져와 모델에 추가
+            List<Product> products = new ArrayList<>();
+            for (LikedItem likedItem : likedItems) {
+                Product product = cuService.findProductByBarcodeNum(likedItem.getBarcodeNumber());
+                if (product != null) {
+                    products.add(product);
+                }
+            }
+            
+            model.addAttribute("likedItems", likedItems);
+            model.addAttribute("products", products); // 상품 정보를 모델에 추가
+
+        } else {
+            model.addAttribute("errorMessage", "인증되지 않은 접근입니다.");
+            return "login";
+        }
+        return "/myPageMenu/likeList";
+    }
+    
+    
+
 
     @GetMapping("/myPageMenu/viewMyReview")
     public String viewMyReviewPage(Model model) {
