@@ -7,10 +7,13 @@
 <body>
 <div class="container">
     <div>
-        <h3 th:text="${product.productName}"></h3>
-        <p th:text="${product.productPrice}"> 원</p>
-        할인태그: <p th:text="${product.productDiscount}"></p>
+        <h3 th:text="${product.productName}">${product.productName}</h3>
+        <p th:text="${product.productPrice}">${product.productPrice} 원</p>
+        할인태그: <p th:text="${product.productDiscount}">${product.productDiscount}</p>
     </div>
+
+    <!-- 찜하기 버튼 추가 -->
+    <button onclick="addToLikelist()">찜하기</button>
 
     <button onclick="goBack()">돌아가기</button>
 
@@ -18,16 +21,44 @@
         function goBack() {
             window.history.back();
         }
+
+        function addToLikelist() {
+            var barcodeNumberInput = document.getElementById('barcodeNumber');
+            if (!barcodeNumberInput) {
+                alert('바코드 번호를 찾을 수 없습니다.');
+                return;
+            }
+            var barcodeNumber = barcodeNumberInput.value;
+            if (!barcodeNumber) {
+                alert('바코드 번호가 비어 있습니다.');
+                return;
+            }
+            fetch('/addToLikelist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ barcodeNumber: barcodeNumber })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('상품을 찜 목록에 추가했습니다.');
+                } else {
+                    alert('찜하기에 실패했습니다. 로그인 상태를 확인하세요.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('오류가 발생했습니다.');
+            });
+        }
     </script>
 
     <!-- 리뷰 폼 시작 -->
     <form action="/submitReview" method="POST">
-       
-            <input type="text" maxlength="10" id="rating" name="rating" placeholder="별점" required><br>
-            <input type="text" id="reviewText" name="reviewText" placeholder="리뷰작성" required><br>
-            <input type="hidden" id="barcodeNumber" name="barcodeNumber" th:value="${product.barcodeNumber}">
-        
-
+        <input type="text" maxlength="10" id="rating" name="rating" placeholder="별점" required><br>
+        <input type="text" id="reviewText" name="reviewText" placeholder="리뷰작성" required><br>
+        <input type="hidden" id="barcodeNumber" name="barcodeNumber" th:value="${product.barcodeNumber}">
         <button type="submit">리뷰 등록</button>
     </form>
     <!-- 리뷰 폼 종료 -->
