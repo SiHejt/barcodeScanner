@@ -1,12 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>likesList</title>
+    <title>My Liked Items</title>
 </head>
 <body>
-찜 목록
-<br>
-<a href="/home/myPage">뒤로가기</a></li>
+<h1>My Liked Items</h1>
+<div th:if="${likedItems.empty}">
+    <p>No items liked yet!</p>
+</div>
+<div th:each="likedItem, index : ${likedItems}">
+    <div>
+        <h2>Product Name: <span th:text="${products[__${index.index}__].productName}">Product Name</span></h2>
+        <p>Category: <span th:text="${products[__${index.index}__].productCategory}">Category</span></p>
+        <p>Price: <span th:text="${products[__${index.index}__].productPrice}">Price</span></p>
+        <!-- 기타 필요한 상품 정보 추가 -->
+    </div>
+</div>
 </body>
 </html>
