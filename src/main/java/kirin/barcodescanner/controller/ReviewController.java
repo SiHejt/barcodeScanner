@@ -50,7 +50,8 @@ public class ReviewController {
         review.setUser(user);
         reviewService.saveReview(review);
         redirectAttributes.addFlashAttribute("success", "리뷰가 성공적으로 등록되었습니다.");
-        return "redirect:/";
+
+        return "redirect:/home/viewProduct?barcodeNumber=" + review.getBarcodeNumber();
     }
     
 }

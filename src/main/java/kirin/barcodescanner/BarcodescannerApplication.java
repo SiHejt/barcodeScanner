@@ -31,7 +31,6 @@ public class BarcodescannerApplication implements CommandLineRunner {
 	public void run(String... args) throws InterruptedException {
 //		ChromeOptions options = new ChromeOptions();
 //
-//		//options.addArguments("--headless");
 //		options.addArguments("--remote-allow-origins=*");
 //		options.addArguments("--lang=ko");
 //		options.addArguments("--start-maximized");

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>searchProduct</title>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div th:replace="navbar.html"></div>
+<p>검색어는 <span th:text="${keyword}"></span>입니다.</p>
+
+<ul>
+    <li th:each="product : ${products}">
+        <a th:href="@{/home/viewProduct(barcodeNumber=${product.barcodeNumber})}">
+            상품이미지공간입니다!
+            <td th:text="${product.productName}"></td>
+            <td th:text="${product.productPrice}"></td>원
+            할인태그:<td th:text="${product.productDiscount}"></td>
+        </a>
+    </li>
+</ul>
+
+</body>
+</html>
