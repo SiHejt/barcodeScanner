@@ -1,0 +1,76 @@
+.wordDiv {
+    margin-left: 450px;
+    height: 50px;
+    width: 300px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    text-align: center;
+}
+
+.cart {
+    width: 50px;
+    height: 50px;
+}
+
+.listWord {
+    margin-left: 5px;
+    margin-top: 10px;
+    position: absolute;
+}
+
+.underline {
+    width: 300px;
+    height: 5px;
+    background: black;
+    border: 1px solid black;
+    margin-left: 550px;
+    position: absolute;
+    margin-top: 80px;
+}
+
+.lists {
+    margin-top: 50px;
+
+}
+
+.items {
+    width: 800px;
+    height: 300px;
+    margin-top: 100px;
+    margin-left: 550px;
+    flex-direction: column;
+    left: 0;
+}
+
+.itemBox {
+    position: relative;
+    width: 700px;
+    height: 300px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.thumbNailImage {
+    width: 400px;
+    height: 300px;
+    margin-right: 30px;
+    border: 1px solid black;
+    float: left;
+}
+
+.info {
+    font-weight: bold;
+}
+
+.won {
+    font-size: 27px;
+    width: 10px;
+}
+
+.price {
+    font-size: 27px;
+    position: relative;
+}

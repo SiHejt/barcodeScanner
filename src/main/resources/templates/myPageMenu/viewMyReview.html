@@ -2,19 +2,58 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>My Reviews</title>
+    <title>My Liked Items</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css">
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/body1.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/myPage.css}" rel="stylesheet" />
+    <link th:href="@{/css/review.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        *{
+        font-family: 'Spoqa Han Sans Neo', sans-serif;
+    }
+    </style>
 </head>
-<body>
-<h1>My Reviews</h1>
+
+<div th:replace="navbar.html"></div>
+<body class="body1">
+
+
 <div th:if="${reviews.empty}">
     <p>No reviews found!</p>
 </div>
-<div th:each="review : ${reviews}">
-    <div>
-        <h2 th:text="${review.reviewText}"></h2>
-        <p>Rating: <span th:text="${review.rating}"></span></p>
-        <p>Date: <span th:text="${review.reviewDate}"></span></p>
+
+<ul class="myPageMenu">
+    <li><a href="/myPageMenu/viewMyReview">내가 쓴 리뷰</a></li>
+    <li><a href="/myPageMenu/likeList">찜 목록</a></li>
+    <li><a href="/">로그아웃</a></li>
+    <li><a href="/">홈으로</a></li>
+</ul>
+
+<<div class="wordDiv"><img th:src="@{/review.png}" class="review"></img><span class="listWord">내가 쓴 리뷰</span></div>
+
+<div class="underline"></div>
+<br><br>
+
+<div th:each="review : ${reviews}" class="reviewList">
+    <div class="reviewItem">
+        <img class="thumbNailImage">
+        <div class="itemBox">
+            <h2><span th:text="${review.reviewText}"></span></h2>
+            <p>별점: <span th:text="${review.rating}"></span></p>
+            <p>리뷰 등록 날짜: <span th:text="${review.reviewDate}"></span></p>
+        </div>
     </div>
 </div>
+
+
 </body>
+
+<div th:replace="footer.html"></div>
 </html>

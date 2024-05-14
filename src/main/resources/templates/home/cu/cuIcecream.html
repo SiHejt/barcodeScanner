@@ -26,13 +26,15 @@
 <ul>
     <li th:each="product : ${products}">
         <a th:href="@{/home/viewProduct(barcodeNumber=${product.barcodeNumber})}">
-            상품이미지공간입니다!
+            <img th:src="@{'/images/' + ${product.barcodeNumber} + '.jpg'}" alt="Product Image">
             <td th:text="${product.productName}"></td>
             <td th:text="${product.productPrice}"></td>원
             할인태그:<td th:text="${product.productDiscount}"></td>
         </a>
     </li>
 </ul>
+
+<div th:replace="topbutton.html"></div>
 
 </body>
 </html>

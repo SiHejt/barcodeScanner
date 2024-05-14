@@ -3,19 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <title>viewPost</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css">
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+<!--    <link th:href="@{/css/body.css}" rel="stylesheet" />-->
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/cuCategory.css}" rel="stylesheet" />
+    <link th:href="@{/css/viewProduct.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        body {
+        font-family: 'Spoqa Han Sans Neo', sans-serif;
+    }
+    </style>
 </head>
-<body>
+
+<body class="body">
+<div th:replace="navbar.html"></div>
+
+<div id="categoryList">
+    <li><a href="/home/cu/cuQuickMeal">간편식사</a></li>
+    <li><a href="/home/cu/cuInstant">즉석조리</a></li>
+    <li><a href="/home/cu/cuSnack">과자류</a></li>
+    <li><a href="/home/cu/cuIcecream">아이스크림</a></li>
+    <li><a href="/home/cu/cuFood">식품</a></li>
+    <li><a href="/home/cu/cuDrink">음료</a></li>
+    <li><a href="/home/cu/cuSupplies">생활용품</a></li>
+</div>
+
+<div class="image">
+    이미지 공간
+</div>
+
 <div class="container">
     <div>
-        <h3 th:text="${product.productName}">${product.productName}</h3>
-        <p th:text="${product.productPrice}">${product.productPrice} 원</p>
-        할인태그: <p th:text="${product.productDiscount}">${product.productDiscount}</p>
+        <span class="info">Product Info</span>
+        <h3><span th:text="${product.productName}"></span>
+            <img th:if="${product.productDiscount.toString().equals('1+1')}" th:src="@{/images/1+1.png}" class="badge1">
+            <img th:if="${product.productDiscount.toString().equals('2+1')}" th:src="@{/images/2+1.png}" class="badge1">
+        </h3>
+
+        <p><span class="won">￦<span th:text="${product.productPrice}" class="price"></span></span></p>
+
+        <br>
+        <div class="underline2"></div>
+        <br>
     </div>
+    <br>
 
     <!-- 찜하기 버튼 추가 -->
-    <button onclick="addToLikelist()">찜하기</button>
+    <button class="button1" onclick="addToLikelist()">찜하기</button>
 
-    <button onclick="goBack()">돌아가기</button>
+    <button class="button2" onclick="goBack()">돌아가기</button>
+    <br><br>
 
     <script>
         function goBack() {
@@ -56,13 +99,22 @@
 
     <!-- 리뷰 폼 시작 -->
     <form action="/submitReview" method="POST">
+        <div class="starRating">
+            <input type="radio" class="star" value="1">
+            <input type="radio" class="star" value="2">
+            <input type="radio" class="star" value="3">
+            <input type="radio" class="star" value="4">
+            <input type="radio" class="star" value="5">
+        </div>
         <input type="text" maxlength="10" id="rating" name="rating" placeholder="별점" required><br>
         <input type="text" id="reviewText" name="reviewText" placeholder="리뷰작성" required><br>
         <input type="hidden" id="barcodeNumber" name="barcodeNumber" th:value="${product.barcodeNumber}">
-        <button type="submit">리뷰 등록</button>
+        <button type="submit" class="reviewSubmit">리뷰 등록</button>
     </form>
     <!-- 리뷰 폼 종료 -->
 
 </div>
 </body>
+
+<div th:replace="footer.html"></div>
 </html>

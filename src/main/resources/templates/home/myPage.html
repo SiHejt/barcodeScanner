@@ -3,8 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>MyPage</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css">
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/body.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/myPage.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </head>
-<body>
+
+</head>
+
+<div th:replace="navbar.html"></div>
+<body class="body">
+
 <ul class="myPageMenu">
     <li><a href="/myPageMenu/viewMyReview">내가 쓴 리뷰</a></li>
     <li><a href="/myPageMenu/likeList">찜 목록</a></li>
@@ -13,4 +29,7 @@
 </ul>
 
 </body>
+
+<div th:replace="topbutton.html"></div>
+<div th:replace="footer.html"></div>
 </html>

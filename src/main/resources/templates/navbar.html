@@ -1,27 +1,39 @@
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand">LOGO</a>
-        </div>
-        <ul class="nav navbar-nav">
-            <li><a href="/">전체보기</a></li>
-            <li><a href="/home/cu/cuQuickMeal">CU</a></li>
-            <li><a href="/home/sevenEleven">세븐일레븐</a></li>
-            <li><a href="/home/gs25">GS25</a></li>
-            <li><a href="/home/event">행사상품</a></li>
-        </ul>
+<head>
+    <link rel="stylesheet" href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css">
+    <style>
+        * {
+        font-family: 'Spoqa Han Sans Neo', sans-serif;
+    }
+    </style>
+</head>
 
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                <form class="navbar-form" action="/home/search" method="GET">
-                    <div class="form-group">
-                        <input type="text" name="keyword" class="form-control" placeholder="상품 이름 검색">
-                    </div>
-                    <button type="submit" class="btn btn-default">검색</button>
-                </form>
-            </li>
-            <li><a href="/home/myPage">마이페이지</a></li>
-            <li><a href="/login">로그인</a></li>
-        </ul>
+<nav class="navbar navbar-inverse" style="background-color: white; border: none;">
+    <div class="container-fluid">
+        <div class="col-xs-1" style="padding: 0;">
+            <a class="navbar-brand" style="color: black; display: flex; align-items: center;" href="/">
+                <img src="/pyeonlilogo_fin2_r_update2_fin.png" alt="LOGO" style="max-width: 70px; height: auto;">
+            </a>
+        </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/" style="color: black;">전체보기</a></li>
+                <li><a href="/home/cu/cuQuickMeal" style="color: black;">CU</a></li>
+                <li><a href="/home/sevenEleven" style="color: black;">세븐일레븐</a></li>
+                <li><a href="/home/gs25" style="color: black;">GS25</a></li>
+                <li><a href="/home/event" style="color: black;">행사상품</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form class="navbar-form" action="/home/search" method="GET">
+                        <div class="form-group">
+                            <input type="text" name="keyword" class="form-control" placeholder="상품 이름 검색">
+                        </div>
+                        <button type="submit" class="btn btn-default btn-search">검색</button>
+                    </form>
+                </li>
+                <li><a href="/home/myPage" style="color: black;">마이페이지</a></li>
+                <li><a href="/login" style="color: black;">로그인</a></li>
+            </ul>
+
     </div>
 </nav>

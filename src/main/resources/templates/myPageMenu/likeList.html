@@ -3,19 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>My Liked Items</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css">
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/body1.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/myPage.css}" rel="stylesheet" />
+    <link th:href="@{/css/likedList.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        *{
+        font-family: 'Spoqa Han Sans Neo', sans-serif;
+    }
+    </style>
 </head>
-<body>
-<h1>My Liked Items</h1>
+
+<div th:replace="navbar.html"></div>
+
+<body class="body1">
+
+<ul class="myPageMenu">
+    <li><a href="/myPageMenu/viewMyReview">내가 쓴 리뷰</a></li>
+    <li><a href="/myPageMenu/likeList">찜 목록</a></li>
+    <li><a href="/">로그아웃</a></li>
+    <li><a href="/">홈으로</a></li>
+</ul>
+
 <div th:if="${likedItems.empty}">
     <p>No items liked yet!</p>
 </div>
-<div th:each="likedItem, index : ${likedItems}">
-    <div>
-        <h2>Product Name: <span th:text="${products[__${index.index}__].productName}">Product Name</span></h2>
-        <p>Category: <span th:text="${products[__${index.index}__].productCategory}">Category</span></p>
-        <p>Price: <span th:text="${products[__${index.index}__].productPrice}">Price</span></p>
+
+<div class="wordDiv"><img th:src="@{/cart.png}" class="cart"></img><span class="listWord">찜 목록</span></div>
+
+<div class="underline"></div>
+<br><br>
+
+<div th:each="likedItem, index : ${likedItems}" class="lists">
+    <div class="items">
+        <img class="thumbNailImage">
+        <div class="itemBox">
+            <span class="info">Product Info</span>
+            <h2><span th:text="${products[__${index.index}__].productName}"></span></h2>
+            <span><span th:text="${products[__${index.index}__].productCategory}"></span></span>
+            <p><span class="won">￦<span th:text="${products[__${index.index}__].productPrice}" class="price"></span></span></p>
+        </div>
         <!-- 기타 필요한 상품 정보 추가 -->
     </div>
 </div>
+
 </body>
+
+<div th:replace="footer.html"></div>
 </html>

@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>CU</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+<!--    <link th:href="@{/css/body.css}" rel="stylesheet" />-->
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/cuCategory.css}" rel="stylesheet" />
+    <script type="text/javascript" th:src="@{/js/nav.js}"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
+    <style>
+        *{
+        font-family: 'Spoqa Han Sans Neo', sans-serif;
+    }
+    </style>
 </head>
-<body>
+<body class="body">
 <div th:replace="navbar.html"></div>
 
 <div id="categoryList">
-    <li><a href="/home/cu/cuQuickMeal">간편식사</a></li>
+    <li><a href="/home/cu/cuQuickMeal">간편식사&nbsp&nbsp&nbsp></a></li>
     <li><a href="/home/cu/cuInstant">즉석조리</a></li>
     <li><a href="/home/cu/cuSnack">과자류</a></li>
     <li><a href="/home/cu/cuIcecream">아이스크림</a></li>
@@ -22,20 +31,21 @@
     <li><a href="/home/cu/cuDrink">음료</a></li>
     <li><a href="/home/cu/cuSupplies">생활용품</a></li>
 </div>
-<br>
-간편식사 카테고리
-<br><br>
 
-<ul>
-    <li th:each="product : ${products}">
+<ul class="list">
+    <li th:each="product : ${products}" class="item">
         <a th:href="@{/home/viewProduct(barcodeNumber=${product.barcodeNumber})}">
-            상품이미지공간입니다!
-            <td th:text="${product.productName}"></td>
-            <td th:text="${product.productPrice}"></td>원
-            할인태그:<td th:text="${product.productDiscount}"></td>
+            <img class="thumbNailImage">
+            <h3 th:text="${product.productName}" class="name"></h3>
+            <span><span th:text="${product.productPrice}" class="price"></span><span class="won">원</span>
+                <img th:if="${product.productDiscount.toString().equals('1+1')}" th:src="@{/images/1+1.png}" class="badge">
+                <img th:if="${product.productDiscount.toString().equals('2+1')}" th:src="@{/images/2+1.png}" class="badge">
+            </span>
         </a>
     </li>
 </ul>
 
 </body>
+
+<div th:replace="footer.html"></div>
 </html>

@@ -3,8 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <title>viewPost</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css">
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/body.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/cuCategory.css}" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        *{
+        font-family: 'Spoqa Han Sans Neo', sans-serif;
+    }
+    </style>
 </head>
-<body>
+
+<body class="body">
+<div th:replace="navbar.html"></div>
+
 <div class="container">
     <div>
         <h3 th:text="${product.productName}"></h3>
@@ -22,11 +40,11 @@
 
     <!-- 리뷰 폼 시작 -->
     <form action="/submitReview" method="POST">
-       
-            <input type="text" maxlength="10" id="rating" name="rating" placeholder="별점" required><br>
-            <input type="text" id="reviewText" name="reviewText" placeholder="리뷰작성" required><br>
-            <input type="hidden" id="barcodeNumber" name="barcodeNumber" th:value="${product.barcodeNumber}">
-        
+
+        <input type="text" maxlength="10" id="rating" name="rating" placeholder="별점" required><br>
+        <input type="text" id="reviewText" name="reviewText" placeholder="리뷰작성" required><br>
+        <input type="hidden" id="barcodeNumber" name="barcodeNumber" th:value="${product.barcodeNumber}">
+
 
         <button type="submit">리뷰 등록</button>
     </form>
@@ -34,4 +52,6 @@
 
 </div>
 </body>
+
+<div th:replace="footer.html"></div>
 </html>

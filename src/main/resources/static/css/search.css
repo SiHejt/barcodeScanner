@@ -1,0 +1,120 @@
+.wordDiv {
+    margin-left: 430px;
+    height: 70px;
+    width: 300px;
+    margin-top: 25px;
+    margin-bottom: 10px;
+    position: absolute;
+    text-align: center;
+}
+
+.searchWord {
+    font-size: 20px;
+    font-weight: bold;
+    right: 15px;
+    position: relative;
+}
+
+.searchResult {
+    top: 10px;
+    width: 30px;
+    height: 27px;
+    position: relative;
+}
+
+.underline {
+    width: 330px;
+    height: 5px;
+    background: black;
+    border: 1px solid black;
+    margin-left: 435px;
+    position: absolute;
+    margin-top: 80px;
+}
+
+#categoryList {
+    list-style: none;
+    height: 30px;
+    position: fixed;
+    height: 100%;
+    margin-left: 100px;
+    padding-top: 60px;
+}
+
+#categoryList li a {
+    margin-top: 10x;
+    align-item: center;
+    height: 50px;
+    width: 140px;
+    line-height: 40px;
+    color: black;
+    font-weight: bold;
+    display: block;
+    font-size: 17px;
+}
+
+#categoryList li a:hover {
+    font-size: 21px;
+}
+
+.list {
+    margin-left: 430px;
+    list-style: none;
+    padding-right: 10px;
+    max-width: 1350px;
+}
+
+.list li a {
+    color: black;
+}
+
+.thumbNailImage {
+    align-item: center;
+    margin-top: 15px;
+    border-bottom: 1px solid black;
+    width: 205px;
+    height: 205px;
+    margin-left: 15px;
+}
+
+.item {
+    width: 240px;
+    height: 370px;
+    float: left;
+    margin-right: 45px;
+    margin-top: 100px;
+    border-radius: 15px;
+    border: 1px solid gray;
+    box-sizing: border-box;
+}
+
+.item:hover {
+    border: 4px solid rgb(77,171,247);
+}
+
+.item:hover .thumbNailImage{
+    transform : scale(1.1);
+}
+
+.name {
+    text-align: center;
+}
+
+.price {
+    margin-left: 80px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.won {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.badge {
+    align-item: center;
+    height: 20px;
+    width: 35px;
+    position: relative;
+    top: 3px;
+}

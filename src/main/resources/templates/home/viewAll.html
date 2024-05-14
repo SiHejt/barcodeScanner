@@ -1,18 +1,80 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>home</title>
-    <meta charset="utf-8">
+
+    <meta charset="UTF-8">
+    <title>CU</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css">
+    <link th:href="@{/css/mainstyle.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <style>
+        body {
+        font-family: 'Spoqa Han Sans Neo', sans-serif;
+    }
+    </style>
 </head>
+
 <body>
 <div th:replace="navbar.html"></div>
+<section class ="header">
+    <div class="title">
+        <!--       <img src ="" alt="main image">-->
+        <h1>한눈에 보는 편의점 리뷰</h1>
+        <p>편리는 바코드를 통해 간편하게 접근할 수 있는 리뷰 사이트입니다. 바코드를 직접 찍어 제품 리뷰를 확인해보세요!</p>
+        <button>바코드로 제품 리뷰 보기</button>
+    </div>
+</section>
 
-야호
+<section class="serv_list">
+    <div class="container">
+        <div class="title">
+            <h1>CU 제품 목록</h1>
+            <hr>
+            <ul>
+                <li><a href="/home/cu/cuQuickMeal">간편식사</a></li>
+                <li><a href="/home/cu/cuInstant">즉석조리</a></li>
+                <li><a href="/home/cu/cuSnack">과자류</a></li>
+                <li><a href="/home/cu/cuIcecream">아이스크림</a></li>
+                <li><a href="/home/cu/cuFood">식품</a></li>
+                <li><a href="/home/cu/cuDrink">음료</a></li>
+                <li><a href="/home/cu/cuSupplies">생활용품</a></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<ul class="item_list">
+    <li>
+        <a href="/home/cu/cuQuickMeal" class="btnall">전체보기</a>
+    </li>
+    <li th:each="product, iterStat : ${products}" class="item" th:if="${iterStat.index < 5}">
+        <div class="card">
+            <a th:href="@{/home/viewProduct(barcodeNumber=${product.barcodeNumber})}">
+                <div class="img">
+                    <img th:src="@{'/images/' + ${product.barcodeNumber} + '.jpg'}" alt="Product Image">
+                </div>
+                <div class="text">
+                    <h3 th:text="${product.productName}"></h3>
+                    <h2><span th:text="${product.productPrice}">${product.productPrice}</span>원 </h2>
+                    <button>리뷰 확인</button>
+                </div>
+                <img th:if="${product.productDiscount.toString().equals('1+1')}" th:src="@{/images/1+1.png}" class="badge">
+                <img th:if="${product.productDiscount.toString().equals('2+1')}" th:src="@{/images/2+1.png}" class="badge">
+            </a>
+        </div>
+    </li>
+</ul>
+
+
+<div th:replace="topbutton.html"></div>
+<div th:replace="footer.html"></div>
 
 </body>
 </html>

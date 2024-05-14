@@ -1,0 +1,107 @@
+.image {
+    float: left;
+    width: 500px;
+    height: 350px;
+    margin-left: 450px;
+    border: 1px solid black;
+    margin-top: 40px;
+}
+
+.container {
+    width: 500px;
+    height: 350px;
+    margin-left: 30px;
+    margin-top: 40px;
+}
+
+.underline1 {
+    border: 1px solid black;
+    height: 3px;
+    background-color: black;
+    position: relative;
+}
+
+.star-rating {
+      display: flex;
+}
+
+.star {
+    appearance: none;
+    padding: 1px;
+}
+
+.star::after {
+   content: '☆';
+   color: hsl(60, 80%, 45%);
+   font-size: 20px;
+}
+
+.star:hover::after,
+.star:has(~ .star:hover)::after,
+.star:checked::after,
+.star:has(~ .star:checked)::after {
+   content: '★';
+}
+
+.star:hover ~ .star::after {
+   content: '☆';
+}
+
+#reviewText {
+    width: 300px;
+    height: 70px;
+}
+
+.reviewSubmit {
+    height: 78px;
+    bottom: 78px;
+    margin-left: 310px;
+    position: relative;
+}
+
+.badge1 {
+    height: 20px;
+    top: 5px;
+    width: 40px;
+    position: relative;
+    align-item: center;
+}
+
+.underline2 {
+    border: 1px dashed gray;
+    position: relative;
+}
+
+.button1 {
+    padding: 10px 25px;
+    background-color: rgb(106, 175, 230);
+    font-size: 15px;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+.button2 {
+    padding: 10px 25px;
+    margin-left: 20px;
+    font-size: 15px;
+    background-color: white;
+    color: rgb(106, 175, 230);
+    border: 1px solid rgb(106, 175, 230);
+    font-weight: bold;
+}
+
+.info {
+    font-weight: bold;
+}
+
+.won {
+    font-size: 27px;
+    width: 10px;
+}
+
+.price {
+    font-size: 27px;
+    right: 70px;
+    position: relative;
+}
