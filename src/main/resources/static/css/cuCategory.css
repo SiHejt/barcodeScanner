@@ -192,3 +192,23 @@
     height: 15px;
     position: relative;
 }
+
+@media (max-width: 430px) {
+    #productList {
+        left: -60px;
+    }
+
+    #categoryList {
+        list-style: none;
+        height: 30px;
+        position: fixed;
+        height: 100%;
+        margin-top: 60px;
+        padding-top: 60px;
+        width: 140px;
+        overflow-y: auto;
+        /* background-color: #f9f9f9;
+        /*border-right: 1px solid #ddd;*/
+    }
+
+}

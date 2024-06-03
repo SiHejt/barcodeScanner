@@ -71,8 +71,8 @@
                 </h2>
 
                 <div class="review-rating-info">
-                    <img th:src="@{/images/starImage.png}" class="starImage">&nbsp&nbsp<span th:text="${product.countReviews}"></span>&nbsp&nbsp
-                    <img th:src="@{/review.png}" class="reviewImage">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span th:text="${product.avgRating}"></span>
+                    <img th:src="@{/images/starImage.png}" class="starImage"><span th:text="${product.avgRating}"></span>
+                    <img th:src="@{/review.png}" class="reviewImage"><span th:text="${product.countReviews}"></span>
                 </div>
                 <!--찜 <span th:text="${product.countLikes}"></span>건-->
 

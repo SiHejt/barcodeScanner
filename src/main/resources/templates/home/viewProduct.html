@@ -21,6 +21,20 @@
     <meta name="description" content="한눈에 보는 편의점 리뷰" />
     <meta name="theme-color" content="#41bdd2" />
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <link th:href="@{/css/mainstyle.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("/service-worker.js");
+            });
+        }
+    </script>
+
     <style>
         @font-face {
        font-family: 'Spoqa Han Sans Neo';
@@ -34,7 +48,7 @@
     </style>
 </head>
 
-<body>
+<body class="body">
 <div th:replace="navbar.html"></div>
 
 <div>
@@ -200,14 +214,13 @@
                     <p><span th:text="${review.reviewText}"></span></p>
                 </div>
 
-
             </div>
         </div>
     </div>
     <!-- 리뷰 리스트 종료 -->
 
 </div>
-<br><br><br>
+<br><br><br
 
 <div th:replace="footer.html"></div>
 
