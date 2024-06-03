@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>viewPost</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+<!--    <link th:href="@{/css/cuCategory.css}" rel="stylesheet" />-->
+    <link th:href="@{/css/viewProduct.css}" rel="stylesheet" />
+    <link rel="manifest" href="/manifest.json">
+    <!--안드로이드-->
+    <link rel="icon" href="/logo_192x192.png" type="image/png">
+    <link rel="shortcut icon" href="/logo_192x192.png" type="image/png">
+    <!--애플-->
+    <link rel="apple-touch-icon" href="/logo_192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="편리" />
+    <meta name="description" content="한눈에 보는 편의점 리뷰" />
+    <meta name="theme-color" content="#41bdd2" />
+
+
+    <style>
+        @font-face {
+       font-family: 'Spoqa Han Sans Neo';
+       src: url('/fonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
+       font-weight: normal;
+       font-style: normal;
+       }
+      *{
+           font-family: 'Spoqa Han Sans Neo', sans-serif;
+      }
+    </style>
+</head>
+
+<body class="body">
+<div th:replace="navbar.html"></div>
+
+<div id="categoryList">
+    <li><a href="/home/cu/cuQuickMeal">간편식사</a></li>
+    <li><a href="/home/cu/cuInstant">즉석조리</a></li>
+    <li><a href="/home/cu/cuSnack">과자류</a></li>
+    <li><a href="/home/cu/cuIcecream">아이스크림</a></li>
+    <li><a href="/home/cu/cuFood">식품</a></li>
+    <li><a href="/home/cu/cuDrink">음료</a></li>
+    <li><a href="/home/cu/cuSupplies">생활용품</a></li>
+</div>
+
+<div class="image">
+    <img th:src="@{'/images/' + ${product.productCategory} + '/' + ${product.barcodeNumber} + '.jpg'}" alt="Product Image">
+</div>
+
+<div class="container">
+    <div>
+        <span class="info">Product Info</span>
+        <h3><span th:text="${product.productName}"></span>
+            <img th:if="${product.productDiscount.toString().equals('1+1')}" th:src="@{/images/1+1.png}" class="badge1">
+            <img th:if="${product.productDiscount.toString().equals('2+1')}" th:src="@{/images/2+1.png}" class="badge1">
+        </h3>
+
+        <p><span class="won">￦<span th:text="${product.productPrice}" class="price"></span></span></p>
+
+        <br>
+        <div class="underline2"></div>
+        <br>
+    </div>
+    <br>
+
+    <!-- 찜하기 버튼 추가 -->
+    <button class="button1" onclick="addToLikelist()">찜하기</button>
+    <button class="button2" onclick="goBack()">돌아가기</button>
+    <br><br>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function addToLikelist() {
+            var barcodeNumberInput = document.getElementById('barcodeNumber');
+            if (!barcodeNumberInput) {
+                alert('바코드 번호를 찾을 수 없습니다.');
+                return;
+            }
+            var barcodeNumber = barcodeNumberInput.value;
+            if (!barcodeNumber) {
+                alert('바코드 번호가 비어 있습니다.');
+                return;
+            }
+            fetch('/addToLikelist', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ barcodeNumber: barcodeNumber })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('상품을 찜 목록에 추가했습니다.');
+                } else {
+                    alert('찜하기에 실패했습니다. 로그인 상태를 확인하세요.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('오류가 발생했습니다.');
+            });
+        }
+    </script>
+
+    <!-- 리뷰 폼 시작 -->
+    <form action="/submitReview" method="POST">
+        <div class="starRating">
+            <input type="radio" class="star" value="1">
+            <input type="radio" class="star" value="2">
+            <input type="radio" class="star" value="3">
+            <input type="radio" class="star" value="4">
+            <input type="radio" class="star" value="5">
+        </div>
+        <input type="text" maxlength="10" id="rating" name="rating" placeholder="별점" required><br>
+        <input type="text" id="reviewText" name="reviewText" placeholder="리뷰작성" required><br>
+        <input type="hidden" id="barcodeNumber" name="barcodeNumber" th:value="${product.barcodeNumber}">
+        <button type="submit" class="reviewSubmit">리뷰 등록</button>
+    </form>
+    <!-- 리뷰 폼 종료 -->
+    <!-- 리뷰 리스트 시작 -->
+    <div>
+        <h3>리뷰</h3>
+        <div th:if="${#lists.isEmpty(reviews)}">
+            <p>아직 등록된 리뷰가 없습니다.</p>
+        </div>
+        <div th:each="review : ${reviews}">
+            <div class="review">
+                <p><strong>작성자:</strong> <span th:text="${review.user.name}"></span></p>
+                <p><strong>별점:</strong> <span th:text="${review.rating}"></span></p>
+                <p><strong>리뷰:</strong> <span th:text="${review.reviewText}"></span></p>
+                <p><strong>날짜:</strong> <span th:text="${review.reviewDate}"></span></p>
+                <hr>
+            </div>
+        </div>
+    </div>
+    <!-- 리뷰 리스트 종료 -->
+
+</div>
+
+</body>
+
+<div th:replace="footer.html"></div>
+</html>

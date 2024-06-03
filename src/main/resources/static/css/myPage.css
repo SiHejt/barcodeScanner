@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'Spoqa Han Sans';
+    src: local('Spoqa Han Sans'), url('SpoqaHanSans-kr-Regular.woff2') format('woff2'),
+         url('SpoqaHanSans-kr-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.myPageMenu {
+    list-style: none;
+    position: fixed;
+    height: 100%;
+    margin-top: 20px;
+    padding-top: 60px;
+    width: 140px;
+    overflow-y: auto;
+    margin-left: 300px;
+}
+
+.myPageMenu li a {
+    margin-top: 10px;
+    align-item: center;
+    height: 50px;
+    width: 140px;
+    line-height: 40px;
+    color: black;
+    font-weight: bold;
+    display: block;
+    font-size: 17px;
+    text-decoration: none;
+}
+
+.myPageMenu li a:hover {
+    font-size: 21px;
+}

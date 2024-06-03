@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyPage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/body.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/myPage.css}" rel="stylesheet" />
+    <link rel="manifest" href="/manifest.json">
+    <!--안드로이드-->
+    <link rel="icon" href="/logo_192x192.png" type="image/png">
+    <link rel="shortcut icon" href="/logo_192x192.png" type="image/png">
+    <!--애플-->
+    <link rel="apple-touch-icon" href="/logo_192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="편리" />
+    <meta name="description" content="한눈에 보는 편의점 리뷰" />
+    <meta name="theme-color" content="#41bdd2" />
+
+    <style>
+        @font-face {
+            font-family: 'Spoqa Han Sans';
+            src: local('Spoqa Han Sans'), url('SpoqaHanSans-kr-Regular.woff2') format('woff2'),
+                 url('SpoqaHanSans-kr-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        * {
+            font-family: 'Spoqa Han Sans Neo', sans-serif;
+        }
+    </style>
+</head>
+<body class="body1">
+
+<div th:replace="navbar.html"></div>
+
+<ul class="myPageMenu">
+    <li><a href="/myPageMenu/viewMyReview">내가 쓴 리뷰</a></li>
+    <li><a href="/myPageMenu/likeList">찜 목록</a></li>
+    <li><a href="/logout">로그아웃</a></li>
+    <li><a href="/">홈으로</a></li>
+</ul>
+
+<div th:replace="topbutton.html"></div>
+<div th:replace="footer.html"></div>
+
+</body>
+</html>

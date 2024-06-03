@@ -1,0 +1,272 @@
+@font-face {
+    font-family: 'Spoqa Han Sans';
+    src: local('Spoqa Han Sans'), url('SpoqaHanSans-kr-Regular.woff2') format('woff2'),
+         url('SpoqaHanSans-kr-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#categoryList {
+    top: 120px;
+    list-style: none;
+    position: fixed;
+    height: 100%;
+    padding-top: 60px;
+    width: 140px;
+    margin-left: 345px;
+    margin-bottom: 1500px;
+}
+
+#categoryList li a {
+    margin-top: 10px;
+    align-item: center;
+    height: 50px;
+    width: 140px;
+    line-height: 40px;
+    color: black;
+    font-weight: bold;
+    display: block;
+    font-size: 17px;
+    text-decoration: none;
+}
+
+#categoryList li a:hover {
+    font-size: 21px;
+}
+
+.image {
+    margin-top: 120px;
+    float: left;
+    width: 350px;
+    height: 350px;
+    margin-left: 550px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+
+.productBox {
+    margin-top: 240px;
+    margin-left: 180px;
+    top: 0;
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    left: 900px;
+}
+
+.badge1 {
+    height: 20px;
+    top: 5px;
+    width: 40px;
+    position: relative;
+    align-item: center;
+}
+
+.underline2 {
+    border: 1px dashed gray;
+    position: relative;
+}
+
+.buttonBox {
+    position: absolute;
+    width: 300px;
+    height: 200px;
+    top: 430px;
+    left: 1080px;
+}
+
+.button1 {
+    padding: 10px 25px;
+    background-color: #41bdd2;
+    font-size: 15px;
+    color: white;
+    border: none;
+    font-weight: bold;
+    width: 110px;
+    position: absolute;
+}
+
+#likeButton {
+    height: 45px;
+    padding: 10px 25px;
+    background-color: #41bdd2;
+    font-size: 15px;
+    color: white;
+    border: none;
+    font-weight: bold;
+    width: 110px;
+    position: absolute;
+}
+
+.button2 {
+    padding: 10px 25px;
+    margin-left: 130px;
+    font-size: 15px;
+    background-color: white;
+    color: #41bdd2;
+    border: 1px solid #41bdd2;
+    font-weight: bold;
+    width: 110px;
+    position: absolute;
+}
+
+.info {
+    font-weight: bold;
+}
+
+.won {
+    font-size: 27px;
+    width: 10px;
+}
+
+.price {
+    font-size: 27px;
+    position: relative;
+}
+
+.reviewForm {
+    width: 850px;
+    height: 100px;
+    top: 800px;
+    left: 560px;
+    position: absolute;
+}
+
+.starRating {
+    margin-left: 1080px;
+    position: absolute;
+    top: 900px;
+}
+
+.star-rating {
+    display: flex;
+}
+
+.star {
+    appearance: none;
+    padding: 1px;
+}
+
+.star::after {
+    content: '☆';
+    color: #ffe86a;
+    font-size: 20px;
+}
+
+.star:hover::after,
+.star:has(~ .star:hover)::after,
+.star:checked::after,
+.star:has(~ .star:checked)::after {
+   content: '★';
+}
+
+.star:hover ~ .star::after {
+   content: '☆';
+}
+
+#rating {
+    position: absolute;
+    top: 900px;
+    left: 900px;
+}
+
+#reviewText {
+    width: 790px;
+    height: 70px;
+}
+
+.reviewSubmit {
+    padding: 5px 13px;
+    background-color: #41bdd2;
+    border: 1px solid #41bdd2;
+    color: white;
+    height: 33px;
+    top: 900px;
+    left: 1275px;
+    position: absolute;
+}
+
+.reviewHead {
+    width: 800px;
+    position: absolute;
+    margin-top: 500px;
+    margin-left: 550px;
+}
+
+.reviewBox {
+    margin-top: 680px;
+}
+
+.review1 {
+    text-align: center;
+}
+
+.review2 {
+    width: 800px;
+    border: 1px solid #C0C0C0;
+    margin-left: 550px;
+    padding-top: 20px;
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+}
+
+.underline3 {
+    width: 800px;
+    height: 1px;
+    background: black;
+    border: 1px solid black;
+    margin-left: 550px;
+    position: absolute;
+    top: 765px;
+}
+
+.name {
+    margin-left: 30px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.date {
+    margin-left: 630px;
+    font-size: 12px;
+    color: gray;
+}
+
+.reviewStar {
+    width: 25px;
+    height: 22px;
+    left: 575px;
+    position: absolute;
+}
+
+.number {
+    position: absolute;
+    left: 600px;
+}
+
+.text {
+    margin-left: 25px;
+    width: 720px;
+}
+
+.productStar {
+    width: 25px;
+    height: 27px;
+    position: absolute;
+}
+
+.likedBox {
+    left: 840px;
+    top: 195px;
+    width: 70px;
+    position: absolute;
+}
+
+.liked {
+    width: 25px;
+    height: 25px;
+    position: absolute;
+}

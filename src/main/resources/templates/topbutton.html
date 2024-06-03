@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>위로 화살표 아이콘 버튼</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-fExMHgbZLyV3v1vb8l2HTiRS0HeEhHdOjOVa+y0xAjYyy6Mehrw9d0xVgV0Y8K/9f1GOygDzsKQB0aPtUG3ncg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="manifest" href="/manifest.json">
+    <!--안드로이드-->
+    <link rel="icon" href="/logo_192x192.png" type="image/png">
+    <link rel="shortcut icon" href="/logo_192x192.png" type="image/png">
+    <!--애플-->
+    <link rel="apple-touch-icon" href="/logo_192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="편리" />
+    <meta name="description" content="한눈에 보는 편의점 리뷰" />
+    <meta name="theme-color" content="#41bdd2" />
+
+    <style>
+        #scrollToTopBtn {
+          position: fixed;
+          text-align: center;
+          line-height: 1;
+          bottom: 60px;
+          right: 20px;
+          z-index: 99;
+          font-size: 25px;
+          border: none;
+          outline: none;
+          background-color: #41bdd2;
+          color: white;
+          cursor: pointer;
+          padding: 10px 10px;
+          border-radius: 50%;
+          text-align: center;
+        }
+
+        #scrollToTopBtn:hover {
+          background-color: #555;
+        }
+    </style>
+</head>
+<body>
+
+
+<button id="scrollToTopBtn" title="Go to top">&#9650;</button>
+
+
+<script>
+    document.getElementById("scrollToTopBtn").addEventListener("click", function() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    });
+</script>
+
+</body>
+</html>

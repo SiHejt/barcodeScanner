@@ -1,0 +1,11 @@
+@font-face {
+    font-family: 'Spoqa Han Sans';
+    src: local('Spoqa Han Sans'), url('SpoqaHanSans-kr-Regular.woff2') format('woff2'),
+         url('SpoqaHanSans-kr-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.body1 {
+    font-family: 'Spoqa Han Sans Neo', sans-serif;
+}

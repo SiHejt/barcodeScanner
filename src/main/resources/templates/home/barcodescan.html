@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Barcode Scan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <link th:href="@{/css/mainstyle.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/scan.css}" rel="stylesheet" />
+
+    <script src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Spoqa Han Sans Neo', sans-serif;
+        }
+        #video {
+            width: 100%;
+            max-width: 600px;
+        }
+        .button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="navbar.html"></div>
+<h1>바코드 스캔</h1>
+<video id="video" autoplay></video>
+<div class="button">
+    <button onclick="stopScanner()">스캔 중지</button>
+</div>
+<div th:replace="footer.html"></div>
+
+<script>
+    let selectedDeviceId;
+    const codeReader = new ZXing.BrowserMultiFormatReader();
+    const videoElement = document.getElementById('video');
+
+    codeReader.listVideoInputDevices()
+        .then((videoInputDevices) => {
+            // 후면 카메라를 찾습니다.
+            selectedDeviceId = videoInputDevices[0].deviceId; // 기본값 설정
+
+            for (const device of videoInputDevices) {
+                if (device.label.toLowerCase().includes('back') || device.label.toLowerCase().includes('rear')) {
+                    selectedDeviceId = device.deviceId;
+                    break;
+                }
+            }
+
+            codeReader.decodeOnceFromVideoDevice(selectedDeviceId, 'video')
+                .then((result) => {
+                    console.log(result);
+                    window.location.href = `/home/viewProduct?barcodeNumber=${result.text}`;
+                })
+                .catch((err) => console.error(err));
+        })
+        .catch((err) => console.error(err));
+
+    function stopScanner() {
+        codeReader.reset();
+    }
+</script>
+</body>
+</html>

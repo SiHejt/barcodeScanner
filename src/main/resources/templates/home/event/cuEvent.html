@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cuEvent</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/cuCategory.css}" rel="stylesheet" />
+    <link th:href="@{/css/sortButton.css}" rel="stylesheet" />
+
+    <style>
+        @font-face {
+            font-family: 'Spoqa Han Sans Neo';
+            src: url('/fonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+       *{
+            font-family: 'Spoqa Han Sans Neo', sans-serif;
+       }
+
+    </style>
+
+</head>
+
+<body>
+<div th:replace="navbar.html"></div>
+
+
+<div class="container">
+
+    <div class="sorting-buttons">
+        <button onclick="filterProducts('all')">전체</button>
+        <button onclick="filterProducts('1+1')">1+1</button>
+        <button onclick="filterProducts('2+1')">2+1</button>
+    </div>
+
+    <div id="categoryList">
+        <li><a href="/home/event/cuEvent">CU</a></li>
+        <li><a href="/home/event/sevenElevenEvent">세븐일레븐</a></li>
+        <li><a href="/home/event/gs25Event">GS25</a></li>
+    </div>
+
+    <ul class="list">
+        <li th:each="product : ${products}" class="item" th:data-discount="${product.productDiscount}">            <a th:href="@{/home/viewProduct(barcodeNumber=${product.barcodeNumber})}">
+                <img th:src="@{'/images/' + ${product.productCategory} + '/' + ${product.barcodeNumber} + '.jpg'}" alt="Product Image" class="productImage">
+
+                <div class="text">
+                    <h3 th:text="${product.productName}" class="name"></h3>
+                    <h2><span th:text="${product.productPrice}"></span>원
+                        <img th:if="${product.productDiscount.toString().equals('1+1')}" th:src="@{/images/1+1.png}" class="badge">
+                        <img th:if="${product.productDiscount.toString().equals('2+1')}" th:src="@{/images/2+1.png}" class="badge">
+                    </h2>
+
+                    <div class="review-rating-info">
+                        <img th:src="@{/images/starImage.png}" class="starImage">&nbsp&nbsp<span th:text="${product.countReviews}"></span>&nbsp&nbsp
+                        <img th:src="@{/review.png}" class="reviewImage">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span th:text="${product.avgRating}"></span>
+                    </div>
+                    <!--찜 <span th:text="${product.countLikes}"></span>건-->
+
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<script>
+    function filterProducts(discountType) {
+        const items = document.querySelectorAll('.item');
+        items.forEach(item => {
+            const badge = item.querySelector('.badge');
+            if (discountType === 'all') {
+                item.style.display = 'block';
+            } else if (badge && badge.src.includes(discountType)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+    }
+</script>
+</body>
+
+<div th:replace="footer.html"></div>
+<div th:replace="topbutton.html"></div>
+</html>
