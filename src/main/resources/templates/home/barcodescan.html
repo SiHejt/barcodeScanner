@@ -8,8 +8,6 @@
     <link th:href="@{/css/mainstyle.css}" rel="stylesheet" />
     <link th:href="@{/css/navbar.css}" rel="stylesheet" />
     <link th:href="@{/css/footer.css}" rel="stylesheet" />
-    <link th:href="@{/css/scan.css}" rel="stylesheet" />
-
     <script src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
     <style>
         body {
@@ -55,14 +53,19 @@
                 }
             }
 
-            codeReader.decodeOnceFromVideoDevice(selectedDeviceId, 'video')
-                .then((result) => {
+            codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+                if (result) {
                     console.log(result);
                     window.location.href = `/home/viewProduct?barcodeNumber=${result.text}`;
-                })
-                .catch((err) => console.error(err));
+                }
+                if (err && !(err instanceof ZXing.NotFoundException)) {
+                    console.error(err);
+                }
+            });
         })
-        .catch((err) => console.error(err));
+        .catch((err) => {
+            console.error(err);
+        });
 
     function stopScanner() {
         codeReader.reset();
