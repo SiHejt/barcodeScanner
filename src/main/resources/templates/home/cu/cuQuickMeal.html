@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="/css/navbar.css">
-<!--    <link th:href="@{/css/body.css}" rel="stylesheet" />-->
+    <!--    <link th:href="@{/css/body.css}" rel="stylesheet" />-->
     <link th:href="@{/css/footer.css}" rel="stylesheet" />
     <link th:href="@{/css/cuCategory.css}" rel="stylesheet" />
     <link th:href="@{/css/sortButton.css}" rel="stylesheet" />
@@ -34,6 +34,7 @@
       *{
            font-family: 'Spoqa Han Sans Neo', sans-serif;
       }
+
     </style>
 </head>
 <body class="body">
@@ -50,23 +51,15 @@
         <li><a href="/home/cu/cuSupplies">생활용품</a></li>
     </div>
 
-
     <div class="sorting-buttons">
         <button id="sortReviewCount">리뷰 많은 순</button>
         <button id="sortRatingHigh">별점 높은 순</button>
         <button id="sortRatingLow">별점 낮은 순</button>
     </div>
 
-    <ul class="list" id="productList">
-        <!--        <li>-->
-        <!--            <div id="categoryBox">-->
-        <!--                <h2> 전체상품 </h2>-->
-        <!--            </div>-->
-        <!--            <div class="upperline"></div>-->
-        <!--        </li>-->
-    </ul>
+    <ul class="list" id="productList"></ul>
+    <div id="pagination" class="pagination"></div>
 </div>
-
 
 <script th:inline="javascript">
     /*<![CDATA[*/
@@ -79,10 +72,18 @@
             console.error('Failed to parse products:', e);
         }
 
-        function renderProducts(products) {
+        var itemsPerPage = 50;
+        var currentPage = 1;
+
+        function renderProducts(products, page) {
             var productList = document.getElementById('productList');
             productList.innerHTML = '';
-            products.forEach(function(product) {
+
+            var startIndex = (page - 1) * itemsPerPage;
+            var endIndex = startIndex + itemsPerPage;
+            var paginatedProducts = products.slice(startIndex, endIndex);
+
+            paginatedProducts.forEach(function(product) {
                 var li = document.createElement('li');
                 li.className = 'item';
                 li.innerHTML = `
@@ -110,7 +111,6 @@
                 productList.appendChild(li);
             });
 
-
             document.querySelectorAll('.heart').forEach(heart => {
                 const barcodeNumber = heart.getAttribute('data-barcode');
                 checkIfLiked(barcodeNumber, heart);
@@ -120,6 +120,29 @@
                     toggleLikelist(barcodeNumber, heart);
                 });
             });
+
+            renderPagination(products.length, page);
+        }
+
+        function renderPagination(totalItems, currentPage) {
+            var pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            var totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            for (var i = 1; i <= totalPages; i++) {
+                var pageLink = document.createElement('a');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                pageLink.className = 'page-link' + (i === currentPage ? ' active' : '');
+                pageLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    currentPage = parseInt(event.target.textContent);
+                    renderProducts(products, currentPage);
+                });
+
+                pagination.appendChild(pageLink);
+            }
         }
 
         function sortProducts(criteria) {
@@ -135,7 +158,7 @@
                 }
             });
 
-            renderProducts(sortedProducts);
+            renderProducts(sortedProducts, currentPage);
         }
 
         document.getElementById('sortReviewCount').addEventListener('click', function() {
@@ -150,7 +173,7 @@
             sortProducts('ratingLow');
         });
 
-        renderProducts(products);
+        renderProducts(products, currentPage);
     });
 
     function checkIfLiked(barcodeNumber, heartElement) {
@@ -212,9 +235,8 @@
     }
     /*]]>*/
 </script>
-
-
 </body>
+
 
 <div th:replace="topbutton.html"></div>
 <div th:replace="footer.html"></div>

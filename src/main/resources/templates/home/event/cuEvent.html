@@ -29,7 +29,6 @@
 <body>
 <div th:replace="navbar.html"></div>
 
-
 <div class="container">
 
     <div class="sorting-buttons">
@@ -44,8 +43,9 @@
         <li><a href="/home/event/gs25Event">GS25</a></li>
     </div>
 
-    <ul class="list">
-        <li th:each="product : ${products}" class="item" th:data-discount="${product.productDiscount}">            <a th:href="@{/home/viewProduct(barcodeNumber=${product.barcodeNumber})}">
+    <ul class="list" id="productList">
+        <li th:each="product : ${products}" class="item" th:data-discount="${product.productDiscount}">
+            <a th:href="@{/home/viewProduct(barcodeNumber=${product.barcodeNumber})}">
                 <img th:src="@{'/images/' + ${product.productCategory} + '/' + ${product.barcodeNumber} + '.jpg'}" alt="Product Image" class="productImage">
 
                 <div class="text">
@@ -60,27 +60,75 @@
                         <img th:src="@{/review.png}" class="reviewImage">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span th:text="${product.avgRating}"></span>
                     </div>
                     <!--찜 <span th:text="${product.countLikes}"></span>건-->
-
                 </div>
             </a>
         </li>
     </ul>
+
+    <div id="pagination" class="pagination"></div>
+
 </div>
 
 <script>
-    function filterProducts(discountType) {
-        const items = document.querySelectorAll('.item');
-        items.forEach(item => {
-            const badge = item.querySelector('.badge');
-            if (discountType === 'all') {
-                item.style.display = 'block';
-            } else if (badge && badge.src.includes(discountType)) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
+    document.addEventListener('DOMContentLoaded', function() {
+        const products = Array.from(document.querySelectorAll('.item'));
+        const itemsPerPage = 50;
+        let currentPage = 1;
+
+        function renderProducts(page) {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedProducts = products.slice(startIndex, endIndex);
+
+            paginatedProducts.forEach(product => {
+                productList.appendChild(product);
+            });
+
+            renderPagination(products.length, page);
+        }
+
+        function renderPagination(totalItems, currentPage) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                pageLink.className = 'page-link' + (i === currentPage ? ' active' : '');
+                pageLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    currentPage = parseInt(event.target.textContent);
+                    renderProducts(currentPage);
+                });
+
+                pagination.appendChild(pageLink);
             }
-        });
-    }
+        }
+
+        function filterProducts(discountType) {
+            products.forEach(product => {
+                const badge = product.querySelector('.badge');
+                if (discountType === 'all') {
+                    product.style.display = 'block';
+                } else if (badge && badge.src.includes(discountType)) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+
+            renderProducts(1);
+        }
+
+        renderProducts(currentPage);
+        window.filterProducts = filterProducts;  // Make filterProducts function accessible globally
+    });
 </script>
 </body>
 
