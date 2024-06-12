@@ -51,7 +51,6 @@
         <li><a href="/home/cu/cuSupplies">생활용품</a></li>
     </div>
 
-
     <div class="sorting-buttons">
         <button id="sortReviewCount">리뷰 많은 순</button>
         <button id="sortRatingHigh">별점 높은 순</button>
@@ -59,23 +58,13 @@
     </div>
 
     <ul class="list" id="productList">
-        <!--        <li>-->
-        <!--            <div id="categoryBox">-->
-        <!--                <h2> 전체상품 </h2>-->
-        <!--            </div>-->
-        <!--            <div class="upperline"></div>-->
-        <!--        </li>-->
+        <!-- Product items will be rendered here -->
     </ul>
+
+    <div id="pagination" class="pagination"></div>
 </div>
 
-
-
-
-
-
-
 <script th:inline="javascript">
-    /*<![CDATA[*/
     document.addEventListener('DOMContentLoaded', function() {
         var products = /*[[${products}]]*/ [];
 
@@ -85,10 +74,18 @@
             console.error('Failed to parse products:', e);
         }
 
-        function renderProducts(products) {
+        const itemsPerPage = 50;
+        let currentPage = 1;
+
+        function renderProducts(products, page) {
             var productList = document.getElementById('productList');
             productList.innerHTML = '';
-            products.forEach(function(product) {
+
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedProducts = products.slice(startIndex, endIndex);
+
+            paginatedProducts.forEach(function(product) {
                 var li = document.createElement('li');
                 li.className = 'item';
                 li.innerHTML = `
@@ -104,7 +101,7 @@
                             </h2>
                             <div class="review-rating-info">
                                     <img src="/images/starImage.png" alt="" class="starImage"><span>${product.avgRating}</span>&nbsp&nbsp&nbsp&nbsp
-                                    <img src="/review.png" alt="" class="reviewImage"<span>${product.countReviews}</span>
+                                    <img src="/review.png" alt="" class="reviewImage"><span>${product.countReviews}</span>
                                 </div>
                             </div>
                         </a>
@@ -116,7 +113,6 @@
                 productList.appendChild(li);
             });
 
-
             document.querySelectorAll('.heart').forEach(heart => {
                 const barcodeNumber = heart.getAttribute('data-barcode');
                 checkIfLiked(barcodeNumber, heart);
@@ -126,6 +122,29 @@
                     toggleLikelist(barcodeNumber, heart);
                 });
             });
+
+            renderPagination(products.length, page);
+        }
+
+        function renderPagination(totalItems, currentPage) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                pageLink.className = 'page-link' + (i === currentPage ? ' active' : '');
+                pageLink.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    currentPage = parseInt(event.target.textContent);
+                    renderProducts(products, currentPage);
+                });
+
+                pagination.appendChild(pageLink);
+            }
         }
 
         function sortProducts(criteria) {
@@ -141,7 +160,7 @@
                 }
             });
 
-            renderProducts(sortedProducts);
+            renderProducts(sortedProducts, 1);
         }
 
         document.getElementById('sortReviewCount').addEventListener('click', function() {
@@ -156,7 +175,7 @@
             sortProducts('ratingLow');
         });
 
-        renderProducts(products);
+        renderProducts(products, currentPage);
     });
 
     function checkIfLiked(barcodeNumber, heartElement) {
@@ -216,7 +235,6 @@
             alert('오류가 발생했습니다.');
         });
     }
-    /*]]>*/
 </script>
 
 </body>
