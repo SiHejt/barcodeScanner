@@ -1,0 +1,60 @@
+@font-face {
+    font-family: 'Spoqa Han Sans';
+    src: local('Spoqa Han Sans'), url('SpoqaHanSans-kr-Regular.woff2') format('woff2'),
+         url('SpoqaHanSans-kr-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.myPageMenu {
+    list-style: none;
+    height: 30px;
+    position: absolute;
+    height: 100%;
+    padding-top: 60px;
+    width: 140px;
+}
+
+.myPageMenu li a {
+    margin-top: 10px;
+    align-item: center;
+    height: 50px;
+    width: 140px;
+    line-height: 40px;
+    color: black;
+    font-weight: bold;
+    display: block;
+    font-size: 17px;
+    text-decoration: none;
+}
+
+.myPageMenu li a:hover {
+    font-size: 21px;
+}
+
+@media screen and (max-width: 430px) {
+    .myPageMenu {
+        display: flex;
+        list-style: none;
+        position: display;
+        height: 100%;
+        margin-top: -40px;
+        padding-top: 60px;
+        width: 400px;
+        margin-left: -30px;
+    }
+
+    .myPageMenu li a {
+        margin-top: 10px;
+        align-item: center;
+        height: 50px;
+        width: 120px;
+        line-height: 40px;
+        color: black;
+        font-weight: bold;
+        display: block;
+        font-size: 14px;
+        text-decoration: none;
+    }
+
+}

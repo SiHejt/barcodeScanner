@@ -1,0 +1,24 @@
+{
+  "background_color": "#ffffff",
+  "dir": "ltr",
+  "display": "standalone",
+  "name": "편리",
+  "orientation": "portrait",
+  "scope": "/",
+  "short_name": "편의점 리뷰",
+  "start_url": "https://pyeonli.shop/home/viewAll",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/logo_192x192.png",
+      "type": "image/png"
+    },
+    {
+      "src": "/logo_512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "description": "바코드로 확인하는 편의점 리뷰",
+  "lang": "ko"
+}

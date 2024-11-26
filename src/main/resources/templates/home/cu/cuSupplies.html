@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>CU</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+    <!--    <link th:href="@{/css/body.css}" rel="stylesheet" />-->
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/cuCategory.css}" rel="stylesheet" />
+    <link th:href="@{/css/sortButton.css}" rel="stylesheet" />
+
+    <link rel="manifest" href="/manifest.json">
+    <!--안드로이드-->
+    <link rel="icon" href="/logo_192x192.png" type="image/png">
+    <link rel="shortcut icon" href="/logo_192x192.png" type="image/png">
+    <!--애플-->
+    <link rel="apple-touch-icon" href="/logo_192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="편리" />
+    <meta name="description" content="한눈에 보는 편의점 리뷰" />
+    <meta name="theme-color" content="#41bdd2" />
+
+    <style>
+        @font-face {
+       font-family: 'Spoqa Han Sans Neo';
+       src: url('/fonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
+       font-weight: normal;
+       font-style: normal;
+       }
+      *{
+           font-family: 'Spoqa Han Sans Neo', sans-serif;
+      }
+    </style>
+</head>
+<body class="body">
+<div th:replace="navbar.html"></div>
+
+<div class="container">
+    <div id="categoryList">
+        <li><a href="/home/cu/cuQuickMeal">간편식사</a></li>
+        <li><a href="/home/cu/cuInstant">즉석조리</a></li>
+        <li><a href="/home/cu/cuSnack">과자류</a></li>
+        <li><a href="/home/cu/cuIcecream">아이스크림</a></li>
+        <li><a href="/home/cu/cuFood">식품</a></li>
+        <li><a href="/home/cu/cuDrink">음료</a></li>
+        <li><a href="/home/cu/cuSupplies">생활용품&nbsp&nbsp&nbsp></a></li>
+    </div>
+
+    <div class="sorting-buttons">
+        <button id="sortReviewCount">리뷰 많은 순</button>
+        <button id="sortRatingHigh">별점 높은 순</button>
+        <button id="sortRatingLow">별점 낮은 순</button>
+    </div>
+
+    <ul class="list" id="productList"></ul>
+    <div id="pagination" class="pagination"></div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    document.addEventListener('DOMContentLoaded', function() {
+        var products = /*[[${products}]]*/ [];
+
+        try {
+            products = JSON.parse(/*[[${products}]]*/ '[]');
+        } catch (e) {
+            console.error('Failed to parse products:', e);
+        }
+
+        var itemsPerPage = 50;
+        var currentPage = 1;
+
+        function renderProducts(products, page) {
+            var productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
+            var startIndex = (page - 1) * itemsPerPage;
+            var endIndex = startIndex + itemsPerPage;
+            var paginatedProducts = products.slice(startIndex, endIndex);
+
+            paginatedProducts.forEach(function(product) {
+                var li = document.createElement('li');
+                li.className = 'item';
+                li.innerHTML = `
+                    <a href="/home/viewProduct?barcodeNumber=${product.barcodeNumber}">
+                        <img src="/images/생활용품/${product.barcodeNumber}.jpg" alt="Product Image" class="productImage">
+                        <div class="text">
+                            <h3 class="name">${product.productName}</h3>
+                            <h2>${product.productPrice}원
+                                <span>
+                                    ${product.productDiscount === '1+1' ? '<img src="/images/1+1.png" class="badge">' : ''}
+                                    ${product.productDiscount === '2+1' ? '<img src="/images/2+1.png" class="badge">' : ''}
+                                </span>
+                            </h2>
+                            <div class="review-rating-info">
+                                    <img src="/images/starImage.png" alt="" class="starImage"><span>${product.avgRating}</span>&nbsp&nbsp&nbsp&nbsp
+                                    <img src="/review.png" alt="" class="reviewImage"<span>${product.countReviews}</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="like-container">
+                            <img src="/images/heart.png" alt="찜 하트" class="heart" data-barcode="${product.barcodeNumber}" data-is-liked="false">
+                            <span class="like-count">${product.countLikes}</span>
+                        </div>
+                `;
+                productList.appendChild(li);
+            });
+
+            document.querySelectorAll('.heart').forEach(heart => {
+                const barcodeNumber = heart.getAttribute('data-barcode');
+                checkIfLiked(barcodeNumber, heart);
+
+                heart.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    toggleLikelist(barcodeNumber, heart);
+                });
+            });
+
+            renderPagination(products.length, page);
+        }
+
+        function renderPagination(totalItems, currentPage) {
+            var pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            var totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            var pagesPerGroup = 5;
+            var currentGroup = Math.ceil(currentPage / pagesPerGroup);
+            var startPage = (currentGroup - 1) * pagesPerGroup + 1;
+            var endPage = Math.min(currentGroup * pagesPerGroup, totalPages);
+
+            if (currentPage > 1) {
+                var prevPage = document.createElement('a');
+                prevPage.href = '#';
+                prevPage.textContent = '‹';
+                prevPage.className = 'page-link';
+                prevPage.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    renderProducts(products, currentPage - 1);
+                });
+                pagination.appendChild(prevPage);
+            }
+
+            if (startPage > 1) {
+                var prevGroup = document.createElement('a');
+                prevGroup.href = '#';
+                prevGroup.textContent = '«';
+                prevGroup.className = 'page-link';
+                prevGroup.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    renderProducts(products, startPage - 1);
+                });
+                pagination.appendChild(prevGroup);
+            }
+
+            for (var i = startPage; i <= endPage; i++) {
+                var pageLink = document.createElement('a');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                pageLink.className = 'page-link' + (i === currentPage ? ' active' : '');
+                pageLink.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    currentPage = parseInt(event.target.textContent);
+                    renderProducts(products, currentPage);
+                });
+                pagination.appendChild(pageLink);
+            }
+
+                if (endPage < totalPages) {
+                    var nextGroup = document.createElement('a');
+                    nextGroup.href = '#';
+                    nextGroup.textContent = '»';
+                    nextGroup.className = 'page-link';
+                    nextGroup.addEventListener('click', function (event) {
+                        event.preventDefault();
+                        renderProducts(products, endPage + 1);
+                    });
+                    pagination.appendChild(nextGroup);
+                }
+        }
+
+        function sortProducts(criteria) {
+            var sortedProducts = products.slice();
+
+            sortedProducts.sort(function(a, b) {
+                if (criteria === 'reviewCount') {
+                    return b.countReviews - a.countReviews;
+                } else if (criteria === 'ratingHigh') {
+                    return b.avgRating !== a.avgRating ? b.avgRating - a.avgRating : b.countReviews - a.countReviews;
+                } else if (criteria === 'ratingLow') {
+                    return a.avgRating !== b.avgRating ? a.avgRating - b.avgRating : b.countReviews - a.countReviews;
+                }
+            });
+
+            renderProducts(sortedProducts, currentPage);
+        }
+
+        document.getElementById('sortReviewCount').addEventListener('click', function() {
+            sortProducts('reviewCount');
+        });
+
+        document.getElementById('sortRatingHigh').addEventListener('click', function() {
+            sortProducts('ratingHigh');
+        });
+
+        document.getElementById('sortRatingLow').addEventListener('click', function() {
+            sortProducts('ratingLow');
+        });
+
+        renderProducts(products, currentPage);
+    });
+
+    function checkIfLiked(barcodeNumber, heartElement) {
+        fetch(`/isLiked?barcodeNumber=${barcodeNumber}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.liked) {
+                heartElement.src = '/images/fullHeart.png';
+                heartElement.classList.add('liked');
+                heartElement.classList.remove('not-liked');
+                heartElement.setAttribute('data-is-liked', 'true');
+            } else {
+                heartElement.src = '/images/heart.png';
+                heartElement.classList.add('not-liked');
+                heartElement.classList.remove('liked');
+                heartElement.setAttribute('data-is-liked', 'false');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
+    function toggleLikelist(barcodeNumber, heartElement) {
+        fetch('/toggleLikelist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ barcodeNumber: barcodeNumber })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'added') {
+                heartElement.src = '/images/fullHeart.png';
+                heartElement.classList.add('liked');
+                heartElement.classList.remove('not-liked');
+                heartElement.setAttribute('data-is-liked', 'true');
+                alert('상품을 찜 목록에 추가했습니다.');
+            } else if (data.status === 'removed') {
+                heartElement.src = '/images/heart.png';
+                heartElement.classList.add('not-liked');
+                heartElement.classList.remove('liked');
+                heartElement.setAttribute('data-is-liked', 'false');
+                alert('상품을 찜 목록에서 제거했습니다.');
+            } else {
+                alert('찜하기에 실패했습니다. 로그인 상태를 확인하세요.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('오류가 발생했습니다.');
+        });
+    }
+    /*]]>*/
+</script>
+</body>
+
+
+<div th:replace="topbutton.html"></div>
+<div th:replace="footer.html"></div>
+</html>

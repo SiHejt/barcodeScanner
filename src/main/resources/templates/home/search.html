@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>searchProduct</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/cuCategory.css}" rel="stylesheet" />
+    <link th:href="@{/css/search.css}" rel="stylesheet" />
+    <link rel="manifest" href="/manifest.json">
+    <!--안드로이드-->
+    <link rel="icon" href="/logo_192x192.png" type="image/png">
+    <link rel="shortcut icon" href="/logo_192x192.png" type="image/png">
+    <!--애플-->
+    <link rel="apple-touch-icon" href="/logo_192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="편리" />
+    <meta name="description" content="한눈에 보는 편의점 리뷰" />
+    <meta name="theme-color" content="#41bdd2" />
+
+    <style>
+
+        @font-face {
+       font-family: 'Spoqa Han Sans Neo';
+       src: url('/fonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
+       font-weight: normal;
+       font-style: normal;
+       }
+      *{
+           font-family: 'Spoqa Han Sans Neo', sans-serif;
+      }
+    </style>
+
+</head>
+<body class="body">
+<div th:replace="navbar.html"></div>
+
+<div class="container">
+    <div id="categoryList">
+        <li><a href="/home/cu/cuQuickMeal">간편식사</a></li>
+        <li><a href="/home/cu/cuInstant">즉석조리</a></li>
+        <li><a href="/home/cu/cuSnack">과자류</a></li>
+        <li><a href="/home/cu/cuIcecream">아이스크림</a></li>
+        <li><a href="/home/cu/cuFood">식품</a></li>
+        <li><a href="/home/cu/cuDrink">음료</a></li>
+        <li><a href="/home/cu/cuSupplies">생활용품</a></li>
+    </div>
+
+    <div class="wordDiv">
+    <span class="searchWord">
+        <img th:src="@{/searchresult.png}" class="searchResult">
+        "<span th:text="${keyword}" class="word"></span>" 에&nbsp;대한&nbsp;검색결과
+    </span>
+    </div>
+
+    <div class="underline"></div>
+
+    <ul class="list">
+        <li th:each="product : ${products}" class="item">
+            <a th:href="@{/home/viewProduct(barcodeNumber=${product.barcodeNumber})}">
+                <img th:src="@{'/images/' + ${product.productCategory} + '/' + ${product.barcodeNumber} + '.jpg'}" alt="Product Image" class="productImage">
+                <div class="text">
+                    <h3 th:text="${product.productName}" class="name"></h3>
+                    <h2><span th:text="${product.productPrice}">${product.productPrice}</span>원
+                        <img th:if="${product.productDiscount.toString().equals('1+1')}" th:src="@{/images/1+1.png}" class="badge">
+                        <img th:if="${product.productDiscount.toString().equals('2+1')}" th:src="@{/images/2+1.png}" class="badge">
+                    </h2>
+
+                    <div class="review-rating-info">
+                        <img th:src="@{/images/starImage.png}" class="starImage"><span th:text="${product.avgRating}"></span>
+                        <img th:src="@{/review.png}" class="reviewImage"><span th:text="${product.countReviews}"></span>
+                    </div>
+                    <!--찜 <span th:text="${product.countLikes}"></span>건-->
+
+                </div>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+
+</body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const keyword = document.querySelector('.word').innerText;
+        const names = document.querySelectorAll('.name');
+
+        names.forEach(name => {
+            const regex = new RegExp(`(${keyword})`, 'gi');
+            name.innerHTML = name.innerHTML.replace(regex, "<span class='highlight'>$1</span>");
+        });
+    });
+</script>
+
+<div th:replace="footer.html"></div>
+</html>

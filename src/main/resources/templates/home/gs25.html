@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>GS25</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="/css/navbar.css">
+    <!--    <link th:href="@{/css/body.css}" rel="stylesheet" />-->
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/cuCategory.css}" rel="stylesheet" />
+    <link th:href="@{/css/sortButton.css}" rel="stylesheet" />
+
+    <link rel="manifest" href="/manifest.json">
+    <!--안드로이드-->
+    <link rel="icon" href="/logo_192x192.png" type="image/png">
+    <link rel="shortcut icon" href="/logo_192x192.png" type="image/png">
+    <!--애플-->
+    <link rel="apple-touch-icon" href="/logo_192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="편리" />
+    <meta name="description" content="한눈에 보는 편의점 리뷰" />
+    <meta name="theme-color" content="#41bdd2" />
+
+    <style>
+        @font-face {
+       font-family: 'Spoqa Han Sans Neo';
+       src: url('/fonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
+       font-weight: normal;
+       font-style: normal;
+       }
+      *{
+           font-family: 'Spoqa Han Sans Neo', sans-serif;
+      }
+    </style>
+</head>
+<body class="body">
+<div th:replace="navbar.html"></div>
+
+GS25
+</body>
+
+
+<div th:replace="topbutton.html"></div>
+<div th:replace="footer.html"></div>
+</html>

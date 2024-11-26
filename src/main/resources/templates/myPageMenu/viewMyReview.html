@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Reviews</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css" rel="stylesheet">
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/body1.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/myPage.css}" rel="stylesheet" />
+    <link th:href="@{/css/review.css}" rel="stylesheet" />
+    <link rel="manifest" href="/manifest.json">
+    <!--안드로이드-->
+    <link rel="icon" href="/logo_192x192.png" type="image/png">
+    <link rel="shortcut icon" href="/logo_192x192.png" type="image/png">
+    <!--애플-->
+    <link rel="apple-touch-icon" href="/logo_192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <meta name="apple-mobile-web-app-title" content="편리" />
+    <meta name="description" content="한눈에 보는 편의점 리뷰" />
+    <meta name="theme-color" content="#41bdd2" />
+
+    <style>
+        *{
+        font-family: 'Spoqa Han Sans Neo', sans-serif;
+        }
+    </style>
+</head>
+
+<div th:replace="navbar.html"></div>
+<body class="body1">
+<div class="container">
+    <ul class="myPageMenu">
+        <li><a href="/myPageMenu/viewMyReview">내가 쓴 리뷰</a></li>
+        <li><a href="/myPageMenu/likeList">찜 목록</a></li>
+        <li><a href="/">로그아웃</a></li>
+        <li><a href="/">홈으로</a></li>
+    </ul>
+
+    <div class="wordDiv">
+        <img th:src="@{/review.png}" class="review"></img><span class="listWord">내가 쓴 리뷰</span>
+    </div>
+
+    <div class="underline"></div>
+    <br><br>
+
+    <div th:if="${reviews.empty}" class="noReview">
+        <p>남긴 리뷰가 없습니다.</p>
+    </div>
+
+    <div th:each="review, index : ${reviews}" class="reviewList">
+        <div class="reviewItem">
+            <img th:src="@{'/images/' + ${products[__${index.index}__].productCategory} + '/' + ${review.barcodeNumber} + '.jpg'}" alt="Product Image" class="productImage">
+            <div class="itemBox">
+                <span class="info">Product Info</span>
+                <h3>
+                    <a th:href="@{'/home/viewProduct?barcodeNumber=' + ${review.barcodeNumber}}">
+                        <span th:text="${products[__${index.index}__].productName}"></span>
+                    </a>
+                </h3>
+                <p><span th:text="${products[__${index.index}__].productCategory}"></span></p>
+
+                <p>리뷰 쓴 날: <span th:text="${review.reviewDate}"></span></p>
+                <p><img th:src="@{/images/starImage.png}" class="star">&nbsp&nbsp&nbsp&nbsp<span th:text="${review.rating}"></span></p>
+                <h3><span th:text="${review.reviewText}"></span></h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<div th:replace="footer.html" class="footer"></div>
+</html>

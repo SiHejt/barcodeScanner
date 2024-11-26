@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>No Internet Connection</title>
+</head>
+<body>
+    <p>Please check your internet connection and try again.</p>
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("/service-worker.js");
+            });
+        }
+    </script>
+</body>
+</html>

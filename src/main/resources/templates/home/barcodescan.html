@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Barcode Scan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <link th:href="@{/css/mainstyle.css}" rel="stylesheet" />
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <script src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: 'Spoqa Han Sans Neo', sans-serif;
+        }
+        #video {
+            width: 100%;
+            max-width: 600px;
+        }
+        .button {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="navbar.html"></div>
+<h1>바코드 스캔</h1>
+<video id="video" autoplay></video>
+<div class="button">
+    <button onclick="stopScanner()">스캔 중지</button>
+</div>
+<div th:replace="footer.html"></div>
+
+<script>
+    let selectedDeviceId;
+    const codeReader = new ZXing.BrowserMultiFormatReader();
+    const videoElement = document.getElementById('video');
+
+    codeReader.listVideoInputDevices()
+        .then((videoInputDevices) => {
+            selectedDeviceId = videoInputDevices[0].deviceId; // 기본값 설정
+
+            for (const device of videoInputDevices) {
+                if (device.label.toLowerCase().includes('back') || device.label.toLowerCase().includes('rear')) {
+                    selectedDeviceId = device.deviceId;
+                    break;
+                }
+            }
+
+            // 카메라 해상도 설정
+            const constraints = {
+                video: {
+                    deviceId: selectedDeviceId ? { exact: selectedDeviceId } : undefined,
+                    width: { ideal: 1280 }, 
+                    height: { ideal: 720 },
+	       facingMode: 'environment',
+                    focusMode: 'continuous'
+                }
+            };
+
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then((stream) => {
+                    videoElement.srcObject = stream;
+                    videoElement.play();
+                    codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+                        if (result) {
+                            console.log(result);
+                            window.location.href = `/home/viewProduct?barcodeNumber=${result.text}`;
+                        }
+                        if (err && !(err instanceof ZXing.NotFoundException)) {
+                            console.error(err);
+                        }
+                    });
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+
+    function stopScanner() {
+        codeReader.reset();
+        if (videoElement.srcObject) {
+            videoElement.srcObject.getTracks().forEach(track => track.stop());
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cuEvent</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+    <link th:href="@{/css/navbar.css}" rel="stylesheet" />
+    <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <link th:href="@{/css/cuCategory.css}" rel="stylesheet" />
+    <link th:href="@{/css/sortButton.css}" rel="stylesheet" />
+
+    <style>
+        @font-face {
+            font-family: 'Spoqa Han Sans Neo';
+            src: url('/fonts/SpoqaHanSansNeo-Regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+       *{
+            font-family: 'Spoqa Han Sans Neo', sans-serif;
+       }
+
+    </style>
+
+</head>
+
+<body>
+<div th:replace="navbar.html"></div>
+
+<div class="container">
+
+    <div class="sorting-buttons">
+        <button onclick="filterProducts('all')">전체</button>
+        <button onclick="filterProducts('1+1')">1+1</button>
+        <button onclick="filterProducts('2+1')">2+1</button>
+    </div>
+
+    <div id="categoryList">
+        <li><a href="/home/event/cuEvent">CU</a></li>
+        <li><a href="/home/event/sevenElevenEvent">세븐일레븐</a></li>
+        <li><a href="/home/event/gs25Event">GS25</a></li>
+    </div>
+
+    <ul class="list" id="productList">
+        <li th:each="product : ${products}" class="item" th:data-discount="${product.productDiscount}">
+            <a th:href="@{/home/viewProduct(barcodeNumber=${product.barcodeNumber})}">
+                <img th:src="@{'/images/' + ${product.productCategory} + '/' + ${product.barcodeNumber} + '.jpg'}" alt="Product Image" class="productImage">
+
+                <div class="text">
+                    <h3 th:text="${product.productName}" class="name"></h3>
+                    <h2><span th:text="${product.productPrice}"></span>원
+                        <img th:if="${product.productDiscount.toString().equals('1+1')}" th:src="@{/images/1+1.png}" class="badge">
+                        <img th:if="${product.productDiscount.toString().equals('2+1')}" th:src="@{/images/2+1.png}" class="badge">
+                    </h2>
+
+                    <div class="review-rating-info">
+                        <img th:src="@{/images/starImage.png}" class="starImage">&nbsp&nbsp<span th:text="${product.countReviews}"></span>&nbsp&nbsp
+                        <img th:src="@{/review.png}" class="reviewImage">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<span th:text="${product.avgRating}"></span>
+                    </div>
+                    <!--찜 <span th:text="${product.countLikes}"></span>건-->
+                </div>
+            </a>
+        </li>
+    </ul>
+
+    <div id="pagination" class="pagination"></div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let allProducts = Array.from(document.querySelectorAll('.item'));
+        let filteredProducts = [...allProducts]; // 초기값으로 전체 상품 설정
+        const itemsPerPage = 50;
+        let currentPage = 1;
+
+        function renderProducts(page) {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+            paginatedProducts.forEach(product => {
+                productList.appendChild(product);
+            });
+
+            renderPagination(filteredProducts.length, page);
+        }
+
+        function renderPagination(totalItems, currentPage) {
+            const pagination = document.getElementById('pagination');
+            pagination.innerHTML = '';
+
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            const pagesPerGroup = 5;
+            const currentGroup = Math.ceil(currentPage / pagesPerGroup);
+            const startPage = (currentGroup - 1) * pagesPerGroup + 1;
+            const endPage = Math.min(currentGroup * pagesPerGroup, totalPages);
+
+            if (currentPage > 1) {
+                const prevPage = document.createElement('a');
+                prevPage.href = '#';
+                prevPage.textContent = '‹';
+                prevPage.className = 'page-link';
+                prevPage.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    renderProducts(currentPage - 1);
+                });
+                pagination.appendChild(prevPage);
+            }
+
+            if (startPage > 1) {
+                const prevGroup = document.createElement('a');
+                prevGroup.href = '#';
+                prevGroup.textContent = '«';
+                prevGroup.className = 'page-link';
+                prevGroup.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    renderProducts(startPage - 1);
+                });
+                pagination.appendChild(prevGroup);
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                const pageLink = document.createElement('a');
+                pageLink.href = '#';
+                pageLink.textContent = i;
+                pageLink.className = 'page-link' + (i === currentPage ? ' active' : '');
+                pageLink.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    renderProducts(i);
+                });
+                pagination.appendChild(pageLink);
+            }
+
+            if (endPage < totalPages) {
+                const nextGroup = document.createElement('a');
+                nextGroup.href = '#';
+                nextGroup.textContent = '»';
+                nextGroup.className = 'page-link';
+                nextGroup.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    renderProducts(endPage + 1);
+                });
+                pagination.appendChild(nextGroup);
+            }
+
+            if (currentPage < totalPages) {
+                const nextPage = document.createElement('a');
+                nextPage.href = '#';
+                nextPage.textContent = '›';
+                nextPage.className = 'page-link';
+                nextPage.addEventListener('click', function (event) {
+                    event.preventDefault();
+                    renderProducts(currentPage + 1);
+                });
+                pagination.appendChild(nextPage);
+            }
+        }
+
+        function filterProducts(discountType) {
+            if (discountType === 'all') {
+                filteredProducts = [...allProducts];
+            } else {
+                filteredProducts = allProducts.filter(product => {
+                    const badge = product.querySelector('.badge');
+                    return badge && badge.src.includes(discountType);
+                });
+            }
+            currentPage = 1; // 필터를 바꿀 때 페이지를 1로 초기화
+            renderProducts(currentPage);
+        }
+
+        renderProducts(currentPage);
+        window.filterProducts = filterProducts;
+    });
+</script>
+</body>
+
+<div th:replace="footer.html"></div>
+<div th:replace="topbutton.html"></div>
+</html>

@@ -1,0 +1,235 @@
+        @font-face {
+            font-family: 'Spoqa Han Sans';
+            src: local('Spoqa Han Sans'), url('SpoqaHanSans-kr-Regular.woff2') format('woff2'),
+                 url('SpoqaHanSans-kr-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+        .header {
+            background: white;
+            background-position : center;
+            background-size: cover;
+            height:500px;
+            display: flex;
+            align-items:center;
+            justify-content: center;
+        }
+
+        .header .title{
+            text-align: center;
+        }
+
+        .header .title img{
+            width:100px;
+        }
+
+        .header .title hi{
+            font-size:40px;
+            color:#444;
+            letter-spacing:0.2em;
+            margin-bottom:0;
+        }
+
+        .header .title p{
+            margin-top:0;
+            margin-bottom:30px;
+            color:#444;
+        }
+
+        .header .title button{
+            background:  #41bdd2;
+            color: white;
+            border-radius:5px;
+            padding:10px 30px;
+            font-size:14px;
+            transition: .5s ease;
+        }
+
+        .serv_list .container .title {
+            margin-bottom: 100px;
+        }
+
+        .serv_list .container .title ul {
+            display: flex;
+            justify-content: space-around;
+            padding: 0;
+            list-style: none;
+            position: relative;
+        }
+
+        .serv_list .container .title ul li {
+            margin: 0 10px;
+        }
+
+        .serv_list .container .title ul li a {
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
+        }
+
+        ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .serv_list .container .title hr {
+            border: 0;
+            height: 1px;
+            background-color: #000000;
+            margin: 20px 0;
+        }
+
+        .allview-container .btnall {
+            list-style-type: none;
+            text-decoration: none;
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+            text-align: center;
+            background: #41bdd2;
+            color: white;
+            border-radius: 5px;
+            padding: 10px 30px;
+            font-size: 14px;
+            margin: 20px auto;
+            transition: 0.5s ease;
+            width: fit-content;
+            transform: translateY(5px);
+        }
+
+        .allview-container .btnall:hover {
+            background-color: #318499;
+            transform: translateY(0);
+        }
+
+        .item_list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            margin: 0;
+        }
+
+        .item_list li {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        .item_list .card {
+            position: relative;
+            border: 1px solid #eee;
+            border-radius: 5px;
+            height: 380px;
+            width: 250px;
+            padding: 5px;
+            margin-bottom: 10px;
+            margin-right: 10px;
+
+        }
+
+        .item_list .card a{
+            color:black;
+        }
+
+        .item_list .card:hover {
+            border-color: #41bdd2;
+            border-width: 2px;
+        }
+
+        .item_list .card img {
+             max-width: 100%;
+             height: auto;
+             justify-content: center;
+        }
+
+        .item_list .card:hover img {
+            transform: scale(1.03);
+            transition: transform 0.3s ease;
+        }
+
+        .item_list .card .text {
+            position: absolute;
+            padding: 10px;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
+
+        .item_list .card .text h3 {
+            font-size: 16px;
+            margin: 0;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .item_list .card .text h2 {
+            font-size: 14px;
+             margin: 0;
+            color: #888;
+            text-align: center;
+        }
+
+        .item_list .card .text button {
+            background: #41bdd2;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            padding: 5px 10px;
+            font-size: 12px;
+            transition: .5s ease;
+            margin-top: 10px;
+        }
+
+        .item_list .card .text button:hover {
+            background-color: #e6e6e6;
+            color: #218aa7;
+        }
+
+        .badge {
+            align-item: center;
+            height: 500px;
+            width: 35px;
+            position: absolute;
+            top: 45px;
+            left: 160px;
+        }
+
+        .review-rating-info {
+           margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .review-rating-info span {
+            font-weight: bold;
+        }
+
+        .like-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .heart {
+            width: 20px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+
+        .like-count {
+            font-size: 16px;
+        }
+
+        .starImage {
+            top: 6px;
+            width: 25px;
+            height: 25px;
+            position: relative;
+        }
+
+        .reviewImage {
+            top: 2px;
+            width: 18px;
+            height: 15px;
+            position: relative;
+        }
